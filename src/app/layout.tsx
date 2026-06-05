@@ -5,8 +5,10 @@ import { SkipLink } from "@/components/SkipLink";
 import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
 import { getSettings, getWeeklyHours, getSpecialHours } from "@/db/queries";
 import { isBannerActive } from "@/lib/hours";
+import { buildLocalBusinessJsonLd } from "@/lib/seo";
 
 // Content is owner-editable (read from D1 at request time), so render dynamically
 // rather than baking a static snapshot at build. SSR on Workers + D1 is fast/cheap.
@@ -56,6 +58,7 @@ export default async function RootLayout({
       className={`${display.variable} ${body.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-cocoa">
+        <JsonLd data={buildLocalBusinessJsonLd(settings, weekly)} />
         <SkipLink />
         <AnnouncementBanner
           text={settings.bannerText}
