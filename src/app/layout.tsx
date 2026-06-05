@@ -1,8 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Fredoka, Nunito } from "next/font/google";
 import "./globals.css";
+import { SkipLink } from "@/components/SkipLink";
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { getSettings, getWeeklyHours, getSpecialHours } from "@/db/queries";
+import { isBannerActive } from "@/lib/hours";
 
-// Friendly rounded display face for headings; warm, readable body face.
+// Content is owner-editable (read from D1 at request time), so render dynamically
+// rather than baking a static snapshot at build. SSR on Workers + D1 is fast/cheap.
+export const dynamic = "force-dynamic";
+
 const display = Fredoka({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
@@ -32,16 +41,31 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const [settings, weekly, special] = await Promise.all([
+    getSettings(),
+    getWeeklyHours(),
+    getSpecialHours(),
+  ]);
+
   return (
     <html
       lang="en"
       className={`${display.variable} ${body.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-cocoa">
-        {children}
+        <SkipLink />
+        <AnnouncementBanner
+          text={settings.bannerText}
+          active={isBannerActive(settings)}
+        />
+        <Header phone={settings.phone} weekly={weekly} special={special} />
+        <div id="main-content" className="flex flex-1 flex-col">
+          {children}
+        </div>
+        <Footer settings={settings} weekly={weekly} />
       </body>
     </html>
   );
