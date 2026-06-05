@@ -1,11 +1,8 @@
+import { cache } from "react";
 import { asc, eq } from "drizzle-orm";
 import { getDb } from "./client";
 import * as schema from "./schema";
-import {
-  DEFAULT_SETTINGS,
-  DEFAULT_HOURS,
-  DEFAULT_MENU,
-} from "@/lib/defaults";
+import { DEFAULT_SETTINGS, DEFAULT_HOURS, DEFAULT_MENU } from "@/lib/defaults";
 import type {
   SiteSettings,
   SocialLinks,
@@ -33,54 +30,22 @@ function or(value: string | null | undefined, fallback: string): string {
 
 /**
  * Site settings, merged over defaults so every field is always populated.
- * Returns DEFAULT_SETTINGS wholesale if the DB read fails.
+ * Returns DEFAULT_SETTINGS wholesale if the DB read fails. Cached per request.
  */
-export async function getSettings(): Promise<SiteSettings> {
+export const getSettings = cache(async (): Promise<SiteSettings> => {
   try {
     const db = getDb();
     const row = (
       await db.select().from(schema.settings).where(eq(schema.settings.id, 1))
     )[0];
-    if (!row) return DEFAULT_SETTINGS;
-
-    return {
-      businessName: or(row.businessName, DEFAULT_SETTINGS.businessName),
-      tagline: or(row.tagline, DEFAULT_SETTINGS.tagline),
-      phone: or(row.phone, DEFAULT_SETTINGS.phone),
-      email: row.email ?? "",
-      addressLine1: or(row.addressLine1, DEFAULT_SETTINGS.addressLine1),
-      city: or(row.city, DEFAULT_SETTINGS.city),
-      state: or(row.state, DEFAULT_SETTINGS.state),
-      zip: or(row.zip, DEFAULT_SETTINGS.zip),
-      mapEmbedUrl: or(row.mapEmbedUrl, DEFAULT_SETTINGS.mapEmbedUrl),
-      heroTitle: or(row.heroTitle, DEFAULT_SETTINGS.heroTitle),
-      heroSubtitle: or(row.heroSubtitle, DEFAULT_SETTINGS.heroSubtitle),
-      homeIntro: or(row.homeIntro, DEFAULT_SETTINGS.homeIntro),
-      aboutBody: or(row.aboutBody, DEFAULT_SETTINGS.aboutBody),
-      awardsText: or(row.awardsText, DEFAULT_SETTINGS.awardsText),
-      largeOrderPolicy: or(
-        row.largeOrderPolicy,
-        DEFAULT_SETTINGS.largeOrderPolicy,
-      ),
-      bannerText: row.bannerText ?? "",
-      bannerEnabled: !!row.bannerEnabled,
-      bannerStart: row.bannerStart ?? null,
-      bannerEnd: row.bannerEnd ?? null,
-      social: safeJson<SocialLinks>(row.social, DEFAULT_SETTINGS.social),
-      badges: safeJson<BadgeKey[]>(row.badges, DEFAULT_SETTINGS.badges),
-      videoUrls: safeJson<string[]>(row.videoUrls, DEFAULT_SETTINGS.videoUrls),
-    };
+    return mapSettings(row);
   } catch (err) {
     console.error("getSettings failed, using defaults:", err);
     return DEFAULT_SETTINGS;
   }
-}
+});
 
-/**
- * Always returns exactly 7 days (Sun…Sat). Missing/extra rows are reconciled
- * so the "open now" logic and hours table never see a malformed schedule.
- */
-export async function getWeeklyHours(): Promise<DayHours[]> {
+export const getWeeklyHours = cache(async (): Promise<DayHours[]> => {
   try {
     const db = getDb();
     const rows = await db.select().from(schema.hours);
@@ -98,9 +63,9 @@ export async function getWeeklyHours(): Promise<DayHours[]> {
     console.error("getWeeklyHours failed, using defaults:", err);
     return DEFAULT_HOURS;
   }
-}
+});
 
-export async function getSpecialHours(): Promise<SpecialHour[]> {
+export const getSpecialHours = cache(async (): Promise<SpecialHour[]> => {
   try {
     const db = getDb();
     const rows = await db
@@ -120,13 +85,9 @@ export async function getSpecialHours(): Promise<SpecialHour[]> {
     console.error("getSpecialHours failed:", err);
     return [];
   }
-}
+});
 
-/**
- * All visible menu categories with their visible items, ordered.
- * Falls back to the full default menu if the table is empty or unreadable.
- */
-export async function getMenu(): Promise<MenuCategory[]> {
+export const getMenu = cache(async (): Promise<MenuCategory[]> => {
   try {
     const db = getDb();
     const cats = await db
@@ -162,9 +123,9 @@ export async function getMenu(): Promise<MenuCategory[]> {
     console.error("getMenu failed, using defaults:", err);
     return DEFAULT_MENU;
   }
-}
+});
 
-export async function getGallery(): Promise<GalleryImage[]> {
+export const getGallery = cache(async (): Promise<GalleryImage[]> => {
   try {
     const db = getDb();
     const rows = await db
@@ -182,9 +143,9 @@ export async function getGallery(): Promise<GalleryImage[]> {
     console.error("getGallery failed:", err);
     return [];
   }
-}
+});
 
-export async function getFeatured(): Promise<FeaturedSection[]> {
+export const getFeatured = cache(async (): Promise<FeaturedSection[]> => {
   try {
     const db = getDb();
     const rows = await db
@@ -204,4 +165,35 @@ export async function getFeatured(): Promise<FeaturedSection[]> {
     console.error("getFeatured failed:", err);
     return [];
   }
+});
+
+function mapSettings(row: schema.SettingsRow | undefined): SiteSettings {
+  if (!row) return DEFAULT_SETTINGS;
+  return {
+    businessName: or(row.businessName, DEFAULT_SETTINGS.businessName),
+    tagline: or(row.tagline, DEFAULT_SETTINGS.tagline),
+    phone: or(row.phone, DEFAULT_SETTINGS.phone),
+    email: row.email ?? "",
+    addressLine1: or(row.addressLine1, DEFAULT_SETTINGS.addressLine1),
+    city: or(row.city, DEFAULT_SETTINGS.city),
+    state: or(row.state, DEFAULT_SETTINGS.state),
+    zip: or(row.zip, DEFAULT_SETTINGS.zip),
+    mapEmbedUrl: or(row.mapEmbedUrl, DEFAULT_SETTINGS.mapEmbedUrl),
+    heroTitle: or(row.heroTitle, DEFAULT_SETTINGS.heroTitle),
+    heroSubtitle: or(row.heroSubtitle, DEFAULT_SETTINGS.heroSubtitle),
+    homeIntro: or(row.homeIntro, DEFAULT_SETTINGS.homeIntro),
+    aboutBody: or(row.aboutBody, DEFAULT_SETTINGS.aboutBody),
+    awardsText: or(row.awardsText, DEFAULT_SETTINGS.awardsText),
+    largeOrderPolicy: or(
+      row.largeOrderPolicy,
+      DEFAULT_SETTINGS.largeOrderPolicy,
+    ),
+    bannerText: row.bannerText ?? "",
+    bannerEnabled: !!row.bannerEnabled,
+    bannerStart: row.bannerStart ?? null,
+    bannerEnd: row.bannerEnd ?? null,
+    social: safeJson<SocialLinks>(row.social, DEFAULT_SETTINGS.social),
+    badges: safeJson<BadgeKey[]>(row.badges, DEFAULT_SETTINGS.badges),
+    videoUrls: safeJson<string[]>(row.videoUrls, DEFAULT_SETTINGS.videoUrls),
+  };
 }
