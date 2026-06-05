@@ -53,3 +53,6 @@ cloudflare-env.d.ts
 
 # local dev logs
 .dev-server.log
+
+# generated admin credential SQL (contains a password hash)
+drizzle/admin-user.sql
