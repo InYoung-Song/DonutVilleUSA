@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/*
+  Donutville U.S.A. brand theme
+  Warm, friendly, neighborhood donut shop — cream + coffee + strawberry icing,
+  with a subtle patriotic nod ("Since July 4th, 1966"). Light theme only by
+  design: a bright bakery should always feel bright.
+*/
+@theme {
+  /* Surfaces */
+  --color-cream: #fff8f0;
+  --color-cream-100: #fdeede;
+  --color-cream-200: #f7ddc4;
+
+  /* Coffee / cocoa — primary text + dark surfaces */
+  --color-cocoa: #3b2417;
+  --color-cocoa-700: #5a3a28;
+  --color-cocoa-500: #8a5a3c;
+
+  /* Strawberry icing — primary accent / CTAs */
+  --color-berry: #e23a5e;
+  --color-berry-600: #c12848;
+  --color-berry-100: #fde2e8;
+
+  /* Golden caramel — secondary accent */
+  --color-caramel: #e8a33d;
+  --color-caramel-100: #fbe6c9;
+
+  /* Subtle patriotic blue — small accents only */
+  --color-navy: #1e3a5f;
+  --color-sprinkle: #4aa3df;
+
+  /* Fonts wired from next/font in layout.tsx */
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-body), ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-cocoa);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* Accessible, visible focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--color-berry);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
