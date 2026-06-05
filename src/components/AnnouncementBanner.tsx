@@ -1,14 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { X } from "lucide-react";
 
 const STORAGE_KEY = "dv-banner-dismissed";
 
+/** Read the persisted dismissal without an effect (SSR-safe, no hydration jank). */
+function usePersistedDismissal(text: string): boolean {
+  return useSyncExternalStore(
+    () => () => {}, // no live subscription needed
+    () => {
+      try {
+        return localStorage.getItem(STORAGE_KEY) === text;
+      } catch {
+        return false;
+      }
+    },
+    () => false, // server snapshot: assume not dismissed
+  );
+}
+
 /**
- * Dismissible announcement bar. `active` (date-window + enabled) is computed on
- * the server; this component only handles per-visitor dismissal, keyed by the
- * message text so a new announcement reappears.
+ * Dismissible announcement bar. `active` (enabled + within date window) is
+ * computed on the server; dismissal is per-visitor, keyed by message text so a
+ * new announcement reappears.
  */
 export function AnnouncementBanner({
   text,
@@ -17,17 +32,12 @@ export function AnnouncementBanner({
   text: string;
   active: boolean;
 }) {
-  const [dismissed, setDismissed] = useState(false);
+  const persistedDismissed = usePersistedDismissal(text);
+  const [clickedDismissed, setClickedDismissed] = useState(false);
 
-  useEffect(() => {
-    try {
-      if (localStorage.getItem(STORAGE_KEY) === text) setDismissed(true);
-    } catch {
-      /* localStorage unavailable — show the banner */
-    }
-  }, [text]);
-
-  if (!active || !text.trim() || dismissed) return null;
+  if (!active || !text.trim() || persistedDismissed || clickedDismissed) {
+    return null;
+  }
 
   return (
     <div role="region" aria-label="Announcement" className="bg-berry text-cream">
@@ -37,7 +47,7 @@ export function AnnouncementBanner({
           type="button"
           aria-label="Dismiss announcement"
           onClick={() => {
-            setDismissed(true);
+            setClickedDismissed(true);
             try {
               localStorage.setItem(STORAGE_KEY, text);
             } catch {
