@@ -1,5 +1,5 @@
-/** Decorative frosted-donut mark used in the logo wordmark. */
-function DonutMark({ className = "" }: { className?: string }) {
+/** Decorative frosted-donut mark used in the logo wordmark and menu cards. */
+export function DonutMark({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
