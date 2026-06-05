@@ -23,3 +23,13 @@ export function directionsUrl(s: AddressParts): string {
   const dest = encodeURIComponent(fullAddress(s));
   return `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
 }
+
+/**
+ * Display an owner-entered price. Bare numbers get a "$"; anything with its own
+ * formatting ("$6/dozen", "6 for $5") is shown as-is.
+ */
+export function formatPrice(price: string | null | undefined): string {
+  const t = (price ?? "").trim();
+  if (!t) return "";
+  return /^[\d.]+$/.test(t) ? `$${t}` : t;
+}
