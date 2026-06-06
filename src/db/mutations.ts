@@ -1,7 +1,59 @@
 import "server-only";
 import { eq } from "drizzle-orm";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getDb } from "./client";
 import * as schema from "./schema";
+
+// ── R2 media helpers ──────────────────────────────────────────────────────────
+export async function putMedia(
+  key: string,
+  data: ArrayBuffer,
+  contentType: string,
+): Promise<void> {
+  const { env } = getCloudflareContext();
+  await env.MEDIA.put(key, data, { httpMetadata: { contentType } });
+}
+
+export async function deleteMedia(key: string): Promise<void> {
+  const { env } = getCloudflareContext();
+  await env.MEDIA.delete(key);
+}
+
+// ── Gallery images ────────────────────────────────────────────────────────────
+export interface GalleryInput {
+  altText: string;
+  caption: string | null;
+  sortOrder: number;
+  visible: boolean;
+}
+
+export async function addGalleryImage(
+  v: GalleryInput & { r2Key: string },
+): Promise<void> {
+  await getDb().insert(schema.galleryImages).values(v);
+}
+
+export async function updateGalleryImage(
+  id: number,
+  v: GalleryInput,
+): Promise<void> {
+  await getDb()
+    .update(schema.galleryImages)
+    .set(v)
+    .where(eq(schema.galleryImages.id, id));
+}
+
+export async function getGalleryRow(id: number) {
+  const rows = await getDb()
+    .select()
+    .from(schema.galleryImages)
+    .where(eq(schema.galleryImages.id, id));
+  return rows[0] ?? null;
+}
+
+export async function deleteGalleryImage(id: number): Promise<void> {
+  await getDb().delete(schema.galleryImages).where(eq(schema.galleryImages.id, id));
+}
 
 type SettingsInsert = typeof schema.settings.$inferInsert;
 
