@@ -1,23 +1,7 @@
 import "server-only";
 import { eq } from "drizzle-orm";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getDb } from "./client";
 import * as schema from "./schema";
-
-// ── R2 media helpers ──────────────────────────────────────────────────────────
-export async function putMedia(
-  key: string,
-  data: ArrayBuffer,
-  contentType: string,
-): Promise<void> {
-  const { env } = getCloudflareContext();
-  await env.MEDIA.put(key, data, { httpMetadata: { contentType } });
-}
-
-export async function deleteMedia(key: string): Promise<void> {
-  const { env } = getCloudflareContext();
-  await env.MEDIA.delete(key);
-}
 
 // ── Gallery images ────────────────────────────────────────────────────────────
 export interface GalleryInput {

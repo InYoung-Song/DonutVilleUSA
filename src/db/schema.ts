@@ -1,11 +1,11 @@
-import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
+import { pgTable, serial, integer, text, boolean } from "drizzle-orm/pg-core";
 
 /**
  * Single-row table holding all the "one of each" site settings.
  * Always row id = 1. JSON-ish fields (social, badges, video_urls) are stored
  * as text and parsed in the query layer.
  */
-export const settings = sqliteTable("settings", {
+export const settings = pgTable("settings", {
   id: integer("id").primaryKey(),
   businessName: text("business_name").notNull().default("Donutville U.S.A."),
   tagline: text("tagline").notNull().default(""),
@@ -23,9 +23,7 @@ export const settings = sqliteTable("settings", {
   awardsText: text("awards_text").notNull().default(""),
   largeOrderPolicy: text("large_order_policy").notNull().default(""),
   bannerText: text("banner_text").notNull().default(""),
-  bannerEnabled: integer("banner_enabled", { mode: "boolean" })
-    .notNull()
-    .default(false),
+  bannerEnabled: boolean("banner_enabled").notNull().default(false),
   bannerStart: text("banner_start"),
   bannerEnd: text("banner_end"),
   // JSON-encoded text columns
@@ -36,72 +34,72 @@ export const settings = sqliteTable("settings", {
 });
 
 /** Regular weekly hours — one row per day (0 = Sunday … 6 = Saturday). */
-export const hours = sqliteTable("hours", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const hours = pgTable("hours", {
+  id: serial("id").primaryKey(),
   dayOfWeek: integer("day_of_week").notNull(),
-  isClosed: integer("is_closed", { mode: "boolean" }).notNull().default(false),
+  isClosed: boolean("is_closed").notNull().default(false),
   openTime: text("open_time").notNull().default("06:00"),
   closeTime: text("close_time").notNull().default("23:00"),
 });
 
 /** Holiday / special one-off hours that override the weekly schedule. */
-export const specialHours = sqliteTable("special_hours", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const specialHours = pgTable("special_hours", {
+  id: serial("id").primaryKey(),
   date: text("date").notNull(), // YYYY-MM-DD
   label: text("label").notNull().default(""),
-  isClosed: integer("is_closed", { mode: "boolean" }).notNull().default(false),
+  isClosed: boolean("is_closed").notNull().default(false),
   openTime: text("open_time"),
   closeTime: text("close_time"),
   note: text("note"),
 });
 
 /** Menu groupings. `type` separates the Donuts page from the Beverages page. */
-export const menuCategories = sqliteTable("menu_categories", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const menuCategories = pgTable("menu_categories", {
+  id: serial("id").primaryKey(),
   type: text("type").notNull().default("donut"), // 'donut' | 'beverage'
   name: text("name").notNull(),
   sortOrder: integer("sort_order").notNull().default(0),
-  visible: integer("visible", { mode: "boolean" }).notNull().default(true),
+  visible: boolean("visible").notNull().default(true),
 });
 
 /** Individual menu/service items. Price is free-form text and optional. */
-export const menuItems = sqliteTable("menu_items", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const menuItems = pgTable("menu_items", {
+  id: serial("id").primaryKey(),
   categoryId: integer("category_id").notNull(),
   name: text("name").notNull(),
   description: text("description"),
   price: text("price"), // optional, free-form e.g. "1.25" or "6 for $5"
-  seasonal: integer("seasonal", { mode: "boolean" }).notNull().default(false),
+  seasonal: boolean("seasonal").notNull().default(false),
   sortOrder: integer("sort_order").notNull().default(0),
-  visible: integer("visible", { mode: "boolean" }).notNull().default(true),
-  imageKey: text("image_key"), // R2 object key, optional
+  visible: boolean("visible").notNull().default(true),
+  imageKey: text("image_key"), // /public path or uploaded image URL
 });
 
-/** Owner-uploaded gallery photos (stored in R2, referenced by key). */
-export const galleryImages = sqliteTable("gallery_images", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+/** Owner-uploaded gallery photos (stored in Supabase Storage; r2Key = URL). */
+export const galleryImages = pgTable("gallery_images", {
+  id: serial("id").primaryKey(),
   r2Key: text("r2_key").notNull(),
   altText: text("alt_text").notNull().default(""),
   caption: text("caption"),
   sortOrder: integer("sort_order").notNull().default(0),
-  visible: integer("visible", { mode: "boolean" }).notNull().default(true),
+  visible: boolean("visible").notNull().default(true),
 });
 
 /** Flexible "featured" promo blocks for the home page. */
-export const featuredSections = sqliteTable("featured_sections", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const featuredSections = pgTable("featured_sections", {
+  id: serial("id").primaryKey(),
   title: text("title").notNull(),
   body: text("body"),
   imageKey: text("image_key"),
   linkHref: text("link_href"),
   linkLabel: text("link_label"),
   sortOrder: integer("sort_order").notNull().default(0),
-  visible: integer("visible", { mode: "boolean" }).notNull().default(true),
+  visible: boolean("visible").notNull().default(true),
 });
 
 /** Admin accounts (single owner expected). Password hashed with PBKDF2. */
-export const adminUsers = sqliteTable("admin_users", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const adminUsers = pgTable("admin_users", {
+  id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
   createdAt: text("created_at").notNull().default(""),
