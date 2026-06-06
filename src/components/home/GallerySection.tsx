@@ -1,5 +1,6 @@
 import { Container } from "../ui/Container";
 import { SmartImage } from "../SmartImage";
+import { mediaSrc } from "@/lib/media";
 import type { GalleryImage } from "@/lib/content-types";
 
 /** Owner photo gallery. Renders nothing when there are no images. */
@@ -19,7 +20,7 @@ export function GallerySection({ images }: { images: GalleryImage[] }) {
             >
               <div className="relative aspect-square">
                 <SmartImage
-                  src={`/media/${img.r2Key}`}
+                  src={mediaSrc(img.r2Key)}
                   alt={img.altText}
                   fill
                   unoptimized
