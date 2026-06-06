@@ -1,11 +1,12 @@
 -- Donutville U.S.A. seed data (kept in sync with src/lib/defaults.ts).
--- Re-runnable: resets the content tables only. It does NOT touch admin_users,
--- gallery_images, or featured_sections so owner logins/uploads survive re-seeds.
+-- Re-runnable: resets the content tables. It does NOT touch admin_users so the
+-- owner login survives re-seeds.
 
 DELETE FROM menu_items;
 DELETE FROM menu_categories;
 DELETE FROM hours;
 DELETE FROM settings;
+DELETE FROM gallery_images;
 
 -- ── Site settings (single row) ───────────────────────────────────────────────
 INSERT INTO settings (
@@ -55,65 +56,45 @@ INSERT INTO hours (id, day_of_week, is_closed, open_time, close_time) VALUES
 INSERT INTO menu_categories (id, type, name, sort_order, visible) VALUES
   (1, 'donut',    'Raised & Glazed',          1, 1),
   (2, 'donut',    'Cake Donuts',              2, 1),
-  (3, 'donut',    'Filled Donuts',            3, 1),
-  (4, 'donut',    'Rolls, Twists & Pastries', 4, 1),
-  (5, 'donut',    'Muffins & Cookies',        5, 1),
-  (6, 'beverage', 'Coffee & Hot Drinks',      6, 1),
-  (7, 'beverage', 'Cold Drinks & Juices',     7, 1);
+  (3, 'donut',    'Filled & Cream',           3, 1),
+  (4, 'donut',    'Twists, Rolls & Pastries', 4, 1),
+  (5, 'donut',    'Coated Specials',          5, 1),
+  (6, 'donut',    'Muffins & Cookies',        6, 1),
+  (7, 'beverage', 'Coffee & Hot Drinks',      7, 1),
+  (8, 'beverage', 'Cold Drinks & Juices',     8, 1);
 
--- ── Menu items (no prices — owner can add in admin) ──────────────────────────
+-- ── Menu items (each with its original photo + a short description) ──────────
 INSERT INTO menu_items (id, category_id, name, description, price, seasonal, sort_order, visible, image_key) VALUES
-  (1,  1, 'Sugar Raised',          NULL, NULL, 0, 1, 1, NULL),
-  (2,  1, 'Honey Dipped',          NULL, NULL, 0, 2, 1, NULL),
-  (3,  1, 'Chocolate Iced Rings',  NULL, NULL, 0, 3, 1, NULL),
-  (4,  1, 'Chocolate',             NULL, NULL, 0, 4, 1, NULL),
-  (5,  1, 'Bavarian Cream',        NULL, NULL, 0, 5, 1, NULL),
-  (6,  1, 'Coconut',               NULL, NULL, 0, 6, 1, NULL),
-  (7,  2, 'Buttermilk',            NULL, NULL, 0, 1, 1, NULL),
-  (8,  2, 'Sour Cream',            NULL, NULL, 0, 2, 1, NULL),
-  (9,  2, 'Red Velvet',            NULL, NULL, 0, 3, 1, NULL),
-  (10, 2, 'Cherry Cake',           NULL, NULL, 0, 4, 1, NULL),
-  (11, 2, 'Blueberry Cake',        NULL, NULL, 0, 5, 1, NULL),
-  (12, 2, 'Pumpkin',               NULL, NULL, 1, 6, 1, NULL),
-  (13, 3, 'Strawberry',            NULL, NULL, 0, 1, 1, NULL),
-  (14, 3, 'Apple',                 NULL, NULL, 0, 2, 1, NULL),
-  (15, 3, 'Lemon',                 NULL, NULL, 0, 3, 1, NULL),
-  (16, 3, 'Buttercream',           NULL, NULL, 0, 4, 1, NULL),
-  (17, 3, 'Raspberry',             NULL, NULL, 0, 5, 1, NULL),
-  (18, 3, 'Custard',               NULL, NULL, 0, 6, 1, NULL),
-  (19, 3, 'Cherry',                NULL, NULL, 0, 7, 1, NULL),
-  (20, 4, 'Eclairs',               NULL, NULL, 0, 1, 1, NULL),
-  (21, 4, 'Bow Ties',              NULL, NULL, 0, 2, 1, NULL),
-  (22, 4, 'French Crullers',       NULL, NULL, 0, 3, 1, NULL),
-  (23, 4, 'Cinnamon Rolls',        NULL, NULL, 0, 4, 1, NULL),
-  (24, 4, 'Dutch Crumb',           NULL, NULL, 0, 5, 1, NULL),
-  (25, 4, 'Peanut',                NULL, NULL, 0, 6, 1, NULL),
-  (26, 4, 'Donut Sticks',          NULL, NULL, 0, 7, 1, NULL),
-  (27, 4, 'Jelly & Ice',           NULL, NULL, 0, 8, 1, NULL),
-  (28, 5, 'Fresh Muffins',         NULL, NULL, 0, 1, 1, NULL),
-  (29, 5, 'Cookies',               NULL, NULL, 0, 2, 1, NULL),
-  (30, 6, '100% Colombian Supremo Coffee', 'Our signature — fresh-brewed all day.', NULL, 0, 1, 1, NULL),
-  (31, 6, 'Cappuccino',            NULL, NULL, 0, 2, 1, NULL),
-  (32, 6, 'Hot Chocolate',         NULL, NULL, 0, 3, 1, NULL),
-  (33, 6, 'Hot Tea',               NULL, NULL, 0, 4, 1, NULL),
-  (34, 7, 'Bottled Water',         NULL, NULL, 0, 1, 1, NULL),
-  (35, 7, 'Milk',                  NULL, NULL, 0, 2, 1, NULL),
-  (36, 7, 'Orange Juice',          NULL, NULL, 0, 3, 1, NULL),
-  (37, 7, 'Apple Juice',           NULL, NULL, 0, 4, 1, NULL),
-  (38, 7, 'Cranberry Juice',       NULL, NULL, 0, 5, 1, NULL),
-  (39, 7, 'Pineapple Juice',       NULL, NULL, 0, 6, 1, NULL);
-
--- ── Gallery: original shop photos (optimized, committed under /public/gallery) ─
--- INSERT OR REPLACE on fixed ids 1–10 keeps re-seeding safe and preserves any
--- owner uploads (which get higher ids).
-INSERT OR REPLACE INTO gallery_images (id, r2_key, alt_text, caption, sort_order, visible) VALUES
-  (1,  '/gallery/assorted-donuts.webp',          'An assortment of our hand-cut donuts',        NULL, 1,  1),
-  (2,  '/gallery/chocolate-sprinkle-donut.webp', 'A chocolate-frosted donut with sprinkles',    NULL, 2,  1),
-  (3,  '/gallery/cream-donuts.webp',             'Fresh cream-filled donuts',                   NULL, 3,  1),
-  (4,  '/gallery/powdered-donuts.webp',          'Powdered, filled donuts',                     NULL, 4,  1),
-  (5,  '/gallery/donut-case.webp',               'A case full of fresh donuts',                 NULL, 5,  1),
-  (6,  '/gallery/long-johns.webp',               'Chocolate-topped long johns',                 NULL, 6,  1),
-  (7,  '/gallery/chocolate-crullers.webp',       'Chocolate-dipped crullers',                   NULL, 7,  1),
-  (8,  '/gallery/muffins.webp',                  'Fresh-baked muffins',                         NULL, 8,  1),
-  (9,  '/gallery/coffee.webp',                   'A fresh cup of our Colombian Supremo coffee', NULL, 9,  1),
-  (10, '/gallery/espresso.webp',                 'Freshly brewed coffee',                       NULL, 10, 1);
+  (1,  1, 'Sugar Raised',         'Light, airy raised donuts rolled in sugar.',                          NULL, 0, 1, 1, '/menu/sugar-raised.webp'),
+  (2,  1, 'Honey Dipped',         'Raised donuts in a sweet, glossy honey glaze.',                       NULL, 0, 2, 1, '/menu/honey-dipped.webp'),
+  (3,  1, 'Chocolate Iced Rings', 'Ring donuts dipped in chocolate — plain or with sprinkles.',          NULL, 0, 3, 1, '/menu/chocolate-iced-rings.webp'),
+  (4,  2, 'Chocolate',            'Rich, old-fashioned chocolate cake donuts.',                          NULL, 0, 1, 1, '/menu/chocolate.webp'),
+  (5,  2, 'Red Velvet',           'Red velvet cake donuts with a tender crumb.',                         NULL, 0, 2, 1, '/menu/red-velvet.webp'),
+  (6,  2, 'Buttermilk',           'Classic old-fashioned buttermilk cake donuts.',                       NULL, 0, 3, 1, '/menu/buttermilk.webp'),
+  (7,  2, 'Sour Cream',           'Tender sour cream cake donuts with a sugar glaze.',                   NULL, 0, 4, 1, '/menu/sour-cream.webp'),
+  (8,  2, 'Cherry Cake',          'Cherry-flavored cake donuts.',                                        NULL, 0, 5, 1, '/menu/cherry-cake.webp'),
+  (9,  2, 'Blueberry Cake',       'Blueberry cake donuts, lightly glazed.',                              NULL, 0, 6, 1, '/menu/blueberry-cake.webp'),
+  (10, 2, 'Pumpkin',              'Seasonal pumpkin spice donuts.',                                      NULL, 1, 7, 1, '/menu/pumpkin.webp'),
+  (11, 3, 'Bavarian Cream',       'Filled with Bavarian cream and topped with chocolate.',               NULL, 0, 1, 1, '/menu/bavarian.webp'),
+  (12, 3, 'Assorted Filled',      'Strawberry, apple, lemon, buttercream, raspberry, custard & cherry.', NULL, 0, 2, 1, '/menu/assorted-filled.webp'),
+  (13, 3, 'Jelly & Ice',          'Iced raised donuts filled with sweet jelly.',                         NULL, 0, 3, 1, '/menu/jelly-ice.webp'),
+  (14, 4, 'Bow Ties',             'Twisted, golden bow-tie donuts.',                                     NULL, 0, 1, 1, '/menu/bow-ties.webp'),
+  (15, 4, 'Éclairs',              'Long donuts topped with rich chocolate.',                             NULL, 0, 2, 1, '/menu/eclairs.webp'),
+  (16, 4, 'French Crullers',      'Light, airy crullers with a delicate ridged twist.',                  NULL, 0, 3, 1, '/menu/french-crullers.webp'),
+  (17, 4, 'Cinnamon Rolls',       'Big, gooey, fresh-baked cinnamon rolls.',                             NULL, 0, 4, 1, '/menu/cinnamon-rolls.webp'),
+  (18, 4, 'Donut Sticks',         'Hand-cut donut sticks — plain, sugared, or jelly-filled.',            NULL, 0, 5, 1, '/menu/sticks.webp'),
+  (19, 5, 'Peanut',               'Glazed donuts rolled in crunchy chopped peanuts.',                    NULL, 0, 1, 1, '/menu/peanut.webp'),
+  (20, 5, 'Dutch Crumb',          'Cake donuts in a cinnamon-sugar crumb coating.',                      NULL, 0, 2, 1, '/menu/dutch-crumb.webp'),
+  (21, 5, 'Coconut',              'Cake donuts coated in sweet coconut.',                                NULL, 0, 3, 1, '/menu/coconut.webp'),
+  (22, 6, 'Muffins',              'Blueberry, chocolate chip, and more — baked fresh daily.',            NULL, 0, 1, 1, '/menu/muffins.webp'),
+  (23, 6, 'Cookies',              'Fresh-baked cookies, including chocolate chip.',                      NULL, 0, 2, 1, '/menu/cookies.webp'),
+  (24, 7, 'Colombian Supremo Coffee', 'Our signature 100% Colombian Supremo, fresh all day.',           NULL, 0, 1, 1, '/menu/coffee.webp'),
+  (25, 7, 'Cappuccino',           'Espresso topped with steamed, frothy milk.',                          NULL, 0, 2, 1, '/menu/cappuccino.webp'),
+  (26, 7, 'Hot Chocolate',        'Rich, warming hot chocolate.',                                        NULL, 0, 3, 1, '/menu/hot-chocolate.webp'),
+  (27, 7, 'Tea',                  'A hot, freshly steeped cup of tea.',                                  NULL, 0, 4, 1, '/menu/tea.webp'),
+  (28, 8, 'Milk',                 'Ice-cold milk.',                                                      NULL, 0, 1, 1, '/menu/milk.webp'),
+  (29, 8, 'Orange Juice',         'Refreshing orange juice.',                                            NULL, 0, 2, 1, '/menu/orange-juice.webp'),
+  (30, 8, 'Apple Juice',          'Crisp, cold apple juice.',                                            NULL, 0, 3, 1, '/menu/apple-juice.webp'),
+  (31, 8, 'Cranberry Juice',      'Tart and refreshing cranberry juice.',                                NULL, 0, 4, 1, '/menu/cranberry-juice.webp'),
+  (32, 8, 'Pineapple Juice',      'Sweet, tropical pineapple juice.',                                    NULL, 0, 5, 1, NULL),
+  (33, 8, 'Bottled Water',        'Cold bottled water.',                                                 NULL, 0, 6, 1, '/menu/bottled-water.webp');
