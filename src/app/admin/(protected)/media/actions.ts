@@ -1,13 +1,12 @@
 "use server";
 
 import {
-  putMedia,
-  deleteMedia,
   addGalleryImage,
   updateGalleryImage,
   deleteGalleryImage,
   getGalleryRow,
 } from "@/db/mutations";
+import { uploadMedia, deleteMedia, storageConfigured } from "@/lib/storage";
 import { revalidatePublic } from "@/lib/revalidate";
 import { type ActionState, ok, fail, str, bool, int } from "@/lib/admin";
 
@@ -24,6 +23,11 @@ export async function uploadImage(
   _prev: ActionState,
   form: FormData,
 ): Promise<ActionState> {
+  if (!storageConfigured()) {
+    return fail(
+      "Image uploads aren’t set up yet — add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",
+    );
+  }
   const file = form.get("file");
   if (!(file instanceof File) || file.size === 0) {
     return fail("Choose an image to upload.");
@@ -35,11 +39,11 @@ export async function uploadImage(
     return fail("Image is too large (max 5 MB).");
   }
 
-  const key = `gallery/${crypto.randomUUID()}.${EXT[file.type]}`;
+  const path = `gallery/${crypto.randomUUID()}.${EXT[file.type]}`;
   try {
-    await putMedia(key, await file.arrayBuffer(), file.type);
+    const url = await uploadMedia(path, await file.arrayBuffer(), file.type);
     await addGalleryImage({
-      r2Key: key,
+      r2Key: url,
       altText: str(form, "altText") || "Donutville photo",
       caption: str(form, "caption") || null,
       sortOrder: int(form, "sortOrder", 0),

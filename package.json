@@ -7,23 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate:local": "wrangler d1 migrations apply donutville --local",
-    "db:migrate:remote": "wrangler d1 migrations apply donutville --remote",
-    "db:seed:local": "wrangler d1 execute donutville --local --file=./drizzle/seed.sql",
-    "db:seed:remote": "wrangler d1 execute donutville --remote --file=./drizzle/seed.sql",
+    "db:push": "drizzle-kit push",
+    "db:seed": "node scripts/seed.mjs",
     "db:create-admin": "node scripts/set-admin-password.mjs",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@opennextjs/cloudflare": "^1.19.11",
+    "@supabase/supabase-js": "^2.107.0",
     "drizzle-orm": "^0.45.2",
     "jose": "^6.2.3",
     "lucide-react": "^1.17.0",
     "next": "16.2.7",
+    "postgres": "^3.4.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "zod": "^4.4.3"
@@ -37,7 +33,6 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.98.0"
+    "typescript": "^5"
   }
 }

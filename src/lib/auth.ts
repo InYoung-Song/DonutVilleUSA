@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
 import { eq } from "drizzle-orm";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getDb } from "@/db/client";
 import * as schema from "@/db/schema";
 
@@ -79,10 +78,9 @@ export async function verifyPassword(
 
 // ── session JWT ───────────────────────────────────────────────────────────────
 function getSecret(): Uint8Array {
-  const { env } = getCloudflareContext();
-  const secret = env.AUTH_SECRET;
+  const secret = process.env.AUTH_SECRET;
   if (!secret || secret.length < 16) {
-    throw new Error("AUTH_SECRET is not configured (set it in .dev.vars / secrets).");
+    throw new Error("AUTH_SECRET is not configured (set it in .env.local / Vercel).");
   }
   return new TextEncoder().encode(secret);
 }

@@ -1,9 +1,9 @@
 /**
- * Resolve a gallery image's stored key to a usable src.
- * - Keys starting with "/" are committed assets in /public (the originals).
- * - Other keys are R2 objects served via the /media route (owner uploads).
+ * Resolve a stored image key to a usable <img> src.
+ * - Menu photos are committed under /public (keys like "/menu/coffee.webp").
+ * - Owner gallery uploads are stored in Supabase Storage (full public URLs).
+ * Both are already directly usable, so this is mostly an empty-guard.
  */
 export function mediaSrc(key: string): string {
-  if (!key) return "";
-  return key.startsWith("/") ? key : `/media/${key}`;
+  return key || "";
 }
