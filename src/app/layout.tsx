@@ -25,6 +25,22 @@ export const metadata: Metadata = {
   description:
     "Family-owned donut & coffee shop in Dearborn, Michigan. Hand-cut, New England–style donuts and 100% Colombian Supremo coffee. Open daily.",
   metadataBase: new URL("https://donutvilleusa.com"),
+  keywords: [
+    "Donutville",
+    "donuts Dearborn",
+    "coffee Dearborn Michigan",
+    "donut shop near me",
+    "Colombian Supremo coffee",
+  ],
+  openGraph: {
+    type: "website",
+    siteName: "Donutville U.S.A.",
+    locale: "en_US",
+    url: "https://donutvilleusa.com",
+    title: "Donutville U.S.A. — Your Neighborhood Fix Since 1966",
+    description:
+      "Hand-cut, New England–style donuts and 100% Colombian Supremo coffee in Dearborn, Michigan. Open daily.",
+  },
 };
 
 export const viewport: Viewport = {
