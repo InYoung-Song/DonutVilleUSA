@@ -62,9 +62,9 @@ export const DEFAULT_HOURS: DayHours[] = Array.from({ length: 7 }, (_, day) => (
 export const DEFAULT_SPECIAL_HOURS: SpecialHour[] = [];
 
 /**
- * Menu organized from the original flat lists into friendlier categories.
- * Prices intentionally omitted (the original site listed none); the owner can
- * add them per item in the admin console.
+ * The original Donutville menu — each item carries its real photo (migrated
+ * from the old site) and a short description. Prices are optional and blank by
+ * default (the original listed none); the owner can add them in the admin.
  */
 export const DEFAULT_MENU: MenuCategory[] = [
   {
@@ -72,12 +72,18 @@ export const DEFAULT_MENU: MenuCategory[] = [
     type: "donut",
     name: "Raised & Glazed",
     items: [
-      m(1, "Sugar Raised"),
-      m(2, "Honey Dipped"),
-      m(3, "Chocolate Iced Rings"),
-      m(4, "Chocolate"),
-      m(5, "Bavarian Cream"),
-      m(6, "Coconut"),
+      m(1, "Sugar Raised", {
+        image: "sugar-raised",
+        description: "Light, airy raised donuts rolled in sugar.",
+      }),
+      m(2, "Honey Dipped", {
+        image: "honey-dipped",
+        description: "Raised donuts in a sweet, glossy honey glaze.",
+      }),
+      m(3, "Chocolate Iced Rings", {
+        image: "chocolate-iced-rings",
+        description: "Ring donuts dipped in chocolate — plain or with sprinkles.",
+      }),
     ],
   },
   {
@@ -85,102 +91,179 @@ export const DEFAULT_MENU: MenuCategory[] = [
     type: "donut",
     name: "Cake Donuts",
     items: [
-      m(7, "Buttermilk"),
-      m(8, "Sour Cream"),
-      m(9, "Red Velvet"),
-      m(10, "Cherry Cake"),
-      m(11, "Blueberry Cake"),
-      m(12, "Pumpkin", { seasonal: true }),
+      m(4, "Chocolate", {
+        image: "chocolate",
+        description: "Rich, old-fashioned chocolate cake donuts.",
+      }),
+      m(5, "Red Velvet", {
+        image: "red-velvet",
+        description: "Red velvet cake donuts with a tender crumb.",
+      }),
+      m(6, "Buttermilk", {
+        image: "buttermilk",
+        description: "Classic old-fashioned buttermilk cake donuts.",
+      }),
+      m(7, "Sour Cream", {
+        image: "sour-cream",
+        description: "Tender sour cream cake donuts with a sugar glaze.",
+      }),
+      m(8, "Cherry Cake", {
+        image: "cherry-cake",
+        description: "Cherry-flavored cake donuts.",
+      }),
+      m(9, "Blueberry Cake", {
+        image: "blueberry-cake",
+        description: "Blueberry cake donuts, lightly glazed.",
+      }),
+      m(10, "Pumpkin", {
+        image: "pumpkin",
+        seasonal: true,
+        description: "Seasonal pumpkin spice donuts.",
+      }),
     ],
   },
   {
     id: 3,
     type: "donut",
-    name: "Filled Donuts",
+    name: "Filled & Cream",
     items: [
-      m(13, "Strawberry"),
-      m(14, "Apple"),
-      m(15, "Lemon"),
-      m(16, "Buttercream"),
-      m(17, "Raspberry"),
-      m(18, "Custard"),
-      m(19, "Cherry"),
+      m(11, "Bavarian Cream", {
+        image: "bavarian",
+        description: "Filled with Bavarian cream and topped with chocolate.",
+      }),
+      m(12, "Assorted Filled", {
+        image: "assorted-filled",
+        description: "Strawberry, apple, lemon, buttercream, raspberry, custard & cherry.",
+      }),
+      m(13, "Jelly & Ice", {
+        image: "jelly-ice",
+        description: "Iced raised donuts filled with sweet jelly.",
+      }),
     ],
   },
   {
     id: 4,
     type: "donut",
-    name: "Rolls, Twists & Pastries",
+    name: "Twists, Rolls & Pastries",
     items: [
-      m(20, "Eclairs"),
-      m(21, "Bow Ties"),
-      m(22, "French Crullers"),
-      m(23, "Cinnamon Rolls"),
-      m(24, "Dutch Crumb"),
-      m(25, "Peanut"),
-      m(26, "Donut Sticks"),
-      m(27, "Jelly & Ice"),
+      m(14, "Bow Ties", {
+        image: "bow-ties",
+        description: "Twisted, golden bow-tie donuts.",
+      }),
+      m(15, "Éclairs", {
+        image: "eclairs",
+        description: "Long donuts topped with rich chocolate.",
+      }),
+      m(16, "French Crullers", {
+        image: "french-crullers",
+        description: "Light, airy crullers with a delicate ridged twist.",
+      }),
+      m(17, "Cinnamon Rolls", {
+        image: "cinnamon-rolls",
+        description: "Big, gooey, fresh-baked cinnamon rolls.",
+      }),
+      m(18, "Donut Sticks", {
+        image: "sticks",
+        description: "Hand-cut donut sticks — plain, sugared, or jelly-filled.",
+      }),
     ],
   },
   {
     id: 5,
     type: "donut",
-    name: "Muffins & Cookies",
-    items: [m(28, "Fresh Muffins"), m(29, "Cookies")],
+    name: "Coated Specials",
+    items: [
+      m(19, "Peanut", {
+        image: "peanut",
+        description: "Glazed donuts rolled in crunchy chopped peanuts.",
+      }),
+      m(20, "Dutch Crumb", {
+        image: "dutch-crumb",
+        description: "Cake donuts in a cinnamon-sugar crumb coating.",
+      }),
+      m(21, "Coconut", {
+        image: "coconut",
+        description: "Cake donuts coated in sweet coconut.",
+      }),
+    ],
   },
   {
     id: 6,
-    type: "beverage",
-    name: "Coffee & Hot Drinks",
+    type: "donut",
+    name: "Muffins & Cookies",
     items: [
-      m(30, "100% Colombian Supremo Coffee", {
-        description: "Our signature — fresh-brewed all day.",
+      m(22, "Muffins", {
+        image: "muffins",
+        description: "Blueberry, chocolate chip, and more — baked fresh daily.",
       }),
-      m(31, "Cappuccino"),
-      m(32, "Hot Chocolate"),
-      m(33, "Hot Tea"),
+      m(23, "Cookies", {
+        image: "cookies",
+        description: "Fresh-baked cookies, including chocolate chip.",
+      }),
     ],
   },
   {
     id: 7,
     type: "beverage",
+    name: "Coffee & Hot Drinks",
+    items: [
+      m(24, "Colombian Supremo Coffee", {
+        image: "coffee",
+        description: "Our signature 100% Colombian Supremo, fresh all day.",
+      }),
+      m(25, "Cappuccino", {
+        image: "cappuccino",
+        description: "Espresso topped with steamed, frothy milk.",
+      }),
+      m(26, "Hot Chocolate", {
+        image: "hot-chocolate",
+        description: "Rich, warming hot chocolate.",
+      }),
+      m(27, "Tea", { image: "tea", description: "A hot, freshly steeped cup of tea." }),
+    ],
+  },
+  {
+    id: 8,
+    type: "beverage",
     name: "Cold Drinks & Juices",
     items: [
-      m(34, "Bottled Water"),
-      m(35, "Milk"),
-      m(36, "Orange Juice"),
-      m(37, "Apple Juice"),
-      m(38, "Cranberry Juice"),
-      m(39, "Pineapple Juice"),
+      m(28, "Milk", { image: "milk", description: "Ice-cold milk." }),
+      m(29, "Orange Juice", {
+        image: "orange-juice",
+        description: "Refreshing orange juice.",
+      }),
+      m(30, "Apple Juice", {
+        image: "apple-juice",
+        description: "Crisp, cold apple juice.",
+      }),
+      m(31, "Cranberry Juice", {
+        image: "cranberry-juice",
+        description: "Tart and refreshing cranberry juice.",
+      }),
+      m(32, "Pineapple Juice", {
+        description: "Sweet, tropical pineapple juice.",
+      }),
+      m(33, "Bottled Water", {
+        image: "bottled-water",
+        description: "Cold bottled water.",
+      }),
     ],
   },
 ];
 
-/** The original shop photos (donuts, pastries, coffee), optimized to WebP. */
-export const DEFAULT_GALLERY: GalleryImage[] = [
-  gal(1, "assorted-donuts.webp", "An assortment of our hand-cut donuts"),
-  gal(2, "chocolate-sprinkle-donut.webp", "A chocolate-frosted donut with sprinkles"),
-  gal(3, "cream-donuts.webp", "Fresh cream-filled donuts"),
-  gal(4, "powdered-donuts.webp", "Powdered, filled donuts"),
-  gal(5, "donut-case.webp", "A case full of fresh donuts"),
-  gal(6, "long-johns.webp", "Chocolate-topped long johns"),
-  gal(7, "chocolate-crullers.webp", "Chocolate-dipped crullers"),
-  gal(8, "muffins.webp", "Fresh-baked muffins"),
-  gal(9, "coffee.webp", "A fresh cup of our Colombian Supremo coffee"),
-  gal(10, "espresso.webp", "Freshly brewed coffee"),
-];
-
+export const DEFAULT_GALLERY: GalleryImage[] = [];
 export const DEFAULT_FEATURED: FeaturedSection[] = [];
-
-function gal(id: number, file: string, altText: string): GalleryImage {
-  return { id, r2Key: `/gallery/${file}`, altText, caption: null };
-}
 
 /** Tiny helper to keep the menu definition above readable. */
 function m(
   id: number,
   name: string,
-  opts: { description?: string; price?: string; seasonal?: boolean } = {},
+  opts: {
+    description?: string;
+    price?: string;
+    seasonal?: boolean;
+    image?: string;
+  } = {},
 ) {
   return {
     id,
@@ -188,6 +271,6 @@ function m(
     description: opts.description ?? null,
     price: opts.price ?? null,
     seasonal: opts.seasonal ?? false,
-    imageKey: null,
+    imageKey: opts.image ? `/menu/${opts.image}.webp` : null,
   };
 }
