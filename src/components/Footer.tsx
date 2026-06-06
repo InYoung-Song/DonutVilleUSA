@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Phone, MapPin, Clock, ExternalLink, CreditCard, Wifi } from "lucide-react";
+import { Phone, MapPin, Clock, ExternalLink } from "lucide-react";
 import { Logo } from "./Logo";
 import { AddressBlock } from "./AddressBlock";
+import { PaymentBadges, AmenityBadges } from "./Badges";
 import {
   YoutubeIcon,
   FacebookIcon,
@@ -12,7 +13,6 @@ import {
 import { NAV_LINKS } from "@/lib/nav";
 import { telHref, directionsUrl } from "@/lib/format";
 import { groupWeeklyHours } from "@/lib/hours";
-import { BADGE_META } from "@/lib/badges";
 import type { SiteSettings, DayHours, SocialLinks } from "@/lib/content-types";
 
 type IconComp = React.ComponentType<{ className?: string }>;
@@ -41,8 +41,7 @@ export function Footer({
     .filter(([, href]) => !!href)
     .map(([key, href]) => ({ key, href, Icon: SOCIAL_ICONS[key] ?? ExternalLink }));
 
-  const payment = settings.badges.filter((b) => BADGE_META[b]?.kind === "payment");
-  const amenity = settings.badges.filter((b) => BADGE_META[b]?.kind === "amenity");
+  const hasBadges = settings.badges.length > 0;
 
   return (
     <footer className="mt-16 border-t border-cream-200 bg-cream-100 text-cocoa-700">
@@ -126,21 +125,11 @@ export function Footer({
       </div>
 
       {/* Payment + amenity badges */}
-      {(payment.length > 0 || amenity.length > 0) && (
+      {hasBadges && (
         <div className="border-t border-cream-200">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-4 text-xs text-cocoa-500">
-            {payment.length > 0 && (
-              <span className="inline-flex items-center gap-2">
-                <CreditCard className="h-4 w-4" aria-hidden="true" />
-                We accept: {payment.map((b) => BADGE_META[b].label).join(" · ")}
-              </span>
-            )}
-            {amenity.length > 0 && (
-              <span className="inline-flex items-center gap-2">
-                <Wifi className="h-4 w-4" aria-hidden="true" />
-                {amenity.map((b) => BADGE_META[b].label).join(" · ")}
-              </span>
-            )}
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-4">
+            <PaymentBadges keys={settings.badges} />
+            <AmenityBadges keys={settings.badges} />
           </div>
         </div>
       )}

@@ -169,6 +169,22 @@ export const getGallery = cache(async (): Promise<GalleryImage[]> => {
   }
 });
 
+/** Admin view: every gallery image (including hidden), for editing. */
+export const getGalleryAdmin = cache(
+  async (): Promise<schema.GalleryImageRow[]> => {
+    try {
+      const db = getDb();
+      return await db
+        .select()
+        .from(schema.galleryImages)
+        .orderBy(asc(schema.galleryImages.sortOrder));
+    } catch (err) {
+      console.error("getGalleryAdmin failed:", err);
+      return [];
+    }
+  },
+);
+
 export const getFeatured = cache(async (): Promise<FeaturedSection[]> => {
   try {
     const db = getDb();
