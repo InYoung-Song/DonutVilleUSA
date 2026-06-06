@@ -96,5 +96,5 @@ INSERT INTO menu_items (id, category_id, name, description, price, seasonal, sor
   (29, 8, 'Orange Juice',         'Refreshing orange juice.',                                            NULL, 0, 2, 1, '/menu/orange-juice.webp'),
   (30, 8, 'Apple Juice',          'Crisp, cold apple juice.',                                            NULL, 0, 3, 1, '/menu/apple-juice.webp'),
   (31, 8, 'Cranberry Juice',      'Tart and refreshing cranberry juice.',                                NULL, 0, 4, 1, '/menu/cranberry-juice.webp'),
-  (32, 8, 'Pineapple Juice',      'Sweet, tropical pineapple juice.',                                    NULL, 0, 5, 1, NULL),
+  (32, 8, 'Pineapple Juice',      'Sweet, tropical pineapple juice.',                                    NULL, 0, 5, 1, '/menu/pineapple-juice.webp'),
   (33, 8, 'Bottled Water',        'Cold bottled water.',                                                 NULL, 0, 6, 1, '/menu/bottled-water.webp');

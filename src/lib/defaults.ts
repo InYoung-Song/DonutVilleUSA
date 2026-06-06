@@ -241,6 +241,7 @@ export const DEFAULT_MENU: MenuCategory[] = [
         description: "Tart and refreshing cranberry juice.",
       }),
       m(32, "Pineapple Juice", {
+        image: "pineapple-juice",
         description: "Sweet, tropical pineapple juice.",
       }),
       m(33, "Bottled Water", {
