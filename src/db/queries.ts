@@ -2,7 +2,12 @@ import { cache } from "react";
 import { asc, eq } from "drizzle-orm";
 import { getDb } from "./client";
 import * as schema from "./schema";
-import { DEFAULT_SETTINGS, DEFAULT_HOURS, DEFAULT_MENU } from "@/lib/defaults";
+import {
+  DEFAULT_SETTINGS,
+  DEFAULT_HOURS,
+  DEFAULT_MENU,
+  DEFAULT_GALLERY,
+} from "@/lib/defaults";
 import type {
   SiteSettings,
   SocialLinks,
@@ -157,6 +162,7 @@ export const getGallery = cache(async (): Promise<GalleryImage[]> => {
       .from(schema.galleryImages)
       .where(eq(schema.galleryImages.visible, true))
       .orderBy(asc(schema.galleryImages.sortOrder));
+    if (rows.length === 0) return DEFAULT_GALLERY;
     return rows.map((r) => ({
       id: r.id,
       r2Key: r.r2Key,
@@ -164,8 +170,8 @@ export const getGallery = cache(async (): Promise<GalleryImage[]> => {
       caption: r.caption ?? null,
     }));
   } catch (err) {
-    console.error("getGallery failed:", err);
-    return [];
+    console.error("getGallery failed, using defaults:", err);
+    return DEFAULT_GALLERY;
   }
 });
 

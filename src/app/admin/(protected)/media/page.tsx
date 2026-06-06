@@ -5,6 +5,7 @@ import { AdminForm } from "@/components/admin/AdminForm";
 import { SubmitButton } from "@/components/admin/SubmitButton";
 import { TextField } from "@/components/admin/fields";
 import { SmartImage } from "@/components/SmartImage";
+import { mediaSrc } from "@/lib/media";
 import type { GalleryImageRow } from "@/db/schema";
 import { uploadImage, editImage, removeImage } from "./actions";
 
@@ -20,7 +21,7 @@ function ImageCard({ img }: { img: GalleryImageRow }) {
       className="flex gap-4 rounded-xl border border-cream-200 bg-white p-3"
     >
       <SmartImage
-        src={`/media/${img.r2Key}`}
+        src={mediaSrc(img.r2Key)}
         alt={img.altText}
         width={96}
         height={96}

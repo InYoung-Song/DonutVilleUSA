@@ -102,3 +102,18 @@ INSERT INTO menu_items (id, category_id, name, description, price, seasonal, sor
   (37, 7, 'Apple Juice',           NULL, NULL, 0, 4, 1, NULL),
   (38, 7, 'Cranberry Juice',       NULL, NULL, 0, 5, 1, NULL),
   (39, 7, 'Pineapple Juice',       NULL, NULL, 0, 6, 1, NULL);
+
+-- ── Gallery: original shop photos (optimized, committed under /public/gallery) ─
+-- INSERT OR REPLACE on fixed ids 1–10 keeps re-seeding safe and preserves any
+-- owner uploads (which get higher ids).
+INSERT OR REPLACE INTO gallery_images (id, r2_key, alt_text, caption, sort_order, visible) VALUES
+  (1,  '/gallery/assorted-donuts.webp',          'An assortment of our hand-cut donuts',        NULL, 1,  1),
+  (2,  '/gallery/chocolate-sprinkle-donut.webp', 'A chocolate-frosted donut with sprinkles',    NULL, 2,  1),
+  (3,  '/gallery/cream-donuts.webp',             'Fresh cream-filled donuts',                   NULL, 3,  1),
+  (4,  '/gallery/powdered-donuts.webp',          'Powdered, filled donuts',                     NULL, 4,  1),
+  (5,  '/gallery/donut-case.webp',               'A case full of fresh donuts',                 NULL, 5,  1),
+  (6,  '/gallery/long-johns.webp',               'Chocolate-topped long johns',                 NULL, 6,  1),
+  (7,  '/gallery/chocolate-crullers.webp',       'Chocolate-dipped crullers',                   NULL, 7,  1),
+  (8,  '/gallery/muffins.webp',                  'Fresh-baked muffins',                         NULL, 8,  1),
+  (9,  '/gallery/coffee.webp',                   'A fresh cup of our Colombian Supremo coffee', NULL, 9,  1),
+  (10, '/gallery/espresso.webp',                 'Freshly brewed coffee',                       NULL, 10, 1);

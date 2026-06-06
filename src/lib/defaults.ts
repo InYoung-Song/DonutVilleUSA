@@ -156,8 +156,25 @@ export const DEFAULT_MENU: MenuCategory[] = [
   },
 ];
 
-export const DEFAULT_GALLERY: GalleryImage[] = [];
+/** The original shop photos (donuts, pastries, coffee), optimized to WebP. */
+export const DEFAULT_GALLERY: GalleryImage[] = [
+  gal(1, "assorted-donuts.webp", "An assortment of our hand-cut donuts"),
+  gal(2, "chocolate-sprinkle-donut.webp", "A chocolate-frosted donut with sprinkles"),
+  gal(3, "cream-donuts.webp", "Fresh cream-filled donuts"),
+  gal(4, "powdered-donuts.webp", "Powdered, filled donuts"),
+  gal(5, "donut-case.webp", "A case full of fresh donuts"),
+  gal(6, "long-johns.webp", "Chocolate-topped long johns"),
+  gal(7, "chocolate-crullers.webp", "Chocolate-dipped crullers"),
+  gal(8, "muffins.webp", "Fresh-baked muffins"),
+  gal(9, "coffee.webp", "A fresh cup of our Colombian Supremo coffee"),
+  gal(10, "espresso.webp", "Freshly brewed coffee"),
+];
+
 export const DEFAULT_FEATURED: FeaturedSection[] = [];
+
+function gal(id: number, file: string, altText: string): GalleryImage {
+  return { id, r2Key: `/gallery/${file}`, altText, caption: null };
+}
 
 /** Tiny helper to keep the menu definition above readable. */
 function m(
