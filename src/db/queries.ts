@@ -125,6 +125,30 @@ export const getMenu = cache(async (): Promise<MenuCategory[]> => {
   }
 });
 
+/** Admin view: every category and item (including hidden), for editing. */
+export const getMenuAdmin = cache(
+  async (): Promise<{
+    categories: schema.MenuCategoryRow[];
+    items: schema.MenuItemRow[];
+  }> => {
+    try {
+      const db = getDb();
+      const categories = await db
+        .select()
+        .from(schema.menuCategories)
+        .orderBy(asc(schema.menuCategories.sortOrder));
+      const items = await db
+        .select()
+        .from(schema.menuItems)
+        .orderBy(asc(schema.menuItems.sortOrder));
+      return { categories, items };
+    } catch (err) {
+      console.error("getMenuAdmin failed:", err);
+      return { categories: [], items: [] };
+    }
+  },
+);
+
 export const getGallery = cache(async (): Promise<GalleryImage[]> => {
   try {
     const db = getDb();
