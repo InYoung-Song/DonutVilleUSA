@@ -7,13 +7,14 @@ import { AddressBlock } from "@/components/AddressBlock";
 import { HoursTable } from "@/components/HoursTable";
 import { MapEmbed } from "@/components/MapEmbed";
 import { OpenNowBadge } from "@/components/OpenNowBadge";
-import { telHref, directionsUrl } from "@/lib/format";
+import { ContactForm } from "@/components/contact/ContactForm";
+import { telHref, directionsUrl, formatPhoneDisplay } from "@/lib/format";
 import { getShopNow, formatTime } from "@/lib/hours";
 
 export const metadata: Metadata = {
   title: "Contact & Hours",
   description:
-    "Find Donutville U.S.A. in Dearborn, Michigan — address, phone, hours, and directions. Open daily.",
+    "Find Donutville U.S.A. in Dearborn, Michigan: address, phone, hours, and directions. Open daily.",
 };
 
 export default async function ContactPage() {
@@ -24,6 +25,7 @@ export default async function ContactPage() {
   ]);
 
   const tel = telHref(settings.phone);
+  const phoneLabel = formatPhoneDisplay(settings.phone);
   const today = getShopNow().dateStr;
   const upcoming = special.filter((s) => s.date >= today).slice(0, 4);
 
@@ -33,7 +35,7 @@ export default async function ContactPage() {
         <Container>
           <h1 className="text-4xl font-bold text-cocoa">Find us</h1>
           <p className="mt-3 max-w-2xl text-lg text-cocoa-700">
-            Stop in, call ahead, or get directions — we’re easy to find on Ford
+            Stop in, call ahead, or get directions. We’re easy to find on Ford
             Road in Dearborn.
           </p>
         </Container>
@@ -67,7 +69,7 @@ export default async function ContactPage() {
                       className="inline-flex items-center gap-2 hover:text-berry"
                     >
                       <Phone className="h-4 w-4" aria-hidden="true" />
-                      {settings.phone}
+                      {phoneLabel}
                     </a>
                   </li>
                 )}
@@ -84,6 +86,8 @@ export default async function ContactPage() {
                 )}
               </ul>
             </div>
+
+            <ContactForm />
 
             {/* Hours */}
             <div>
@@ -118,7 +122,7 @@ export default async function ContactPage() {
                           {s.isClosed
                             ? "Closed"
                             : `${formatTime(s.openTime)} – ${formatTime(s.closeTime)}`}
-                          {s.note ? ` — ${s.note}` : ""}
+                          {s.note ? `, ${s.note}` : ""}
                         </span>
                       </li>
                     ))}
@@ -135,7 +139,7 @@ export default async function ContactPage() {
           </div>
 
           {/* Map */}
-          <div className="min-h-[360px] overflow-hidden rounded-2xl border border-cream-200 shadow-sm">
+          <div className="motion-card min-h-[360px] overflow-hidden rounded-2xl border border-cream-200 shadow-sm">
             <MapEmbed
               src={settings.mapEmbedUrl}
               title={`Map to ${settings.businessName}`}

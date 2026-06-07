@@ -38,7 +38,7 @@ export function MenuHighlights({ menu }: { menu: MenuCategory[] }) {
         <div className="flex flex-col items-center text-center">
           <h2 className="text-3xl font-bold text-cocoa">Fresh from the case</h2>
           <p className="mt-2 max-w-xl text-cocoa-700">
-            Hand-cut every morning the New England way — plus our signature
+            Hand-cut every morning the New England way, plus our signature
             100% Colombian Supremo coffee.
           </p>
         </div>
@@ -47,7 +47,7 @@ export function MenuHighlights({ menu }: { menu: MenuCategory[] }) {
           {highlights.map(({ item, isBeverage }) => (
             <li
               key={item.id}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-cream-200 bg-white/60 p-5 text-center"
+              className="motion-card flex flex-col items-center gap-3 rounded-2xl border border-cream-200 bg-cream/70 p-5 text-center"
             >
               {isBeverage ? (
                 <Coffee className="h-10 w-10 text-cocoa-500" aria-hidden="true" />

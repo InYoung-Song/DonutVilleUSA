@@ -1,6 +1,6 @@
 # Donutville U.S.A.
 
-A modern, fast, low-maintenance website for **Donutville U.S.A.** — a family-owned
+A modern, fast, low-maintenance website for **Donutville U.S.A.** - a family-owned
 donut & coffee shop in Dearborn, Michigan ("Your Neighborhood Fix Since July 4th,
 1966!"). It replaces the old GoDaddy site with a mobile-first, accessible build and
 a simple built-in admin console so the owner can update everything without a developer.
@@ -9,15 +9,15 @@ a simple built-in admin console so the owner can update everything without a dev
 
 ## What's inside
 
-- **Public site** — Home, Menu (donuts + beverages, each item with its photo +
+- **Public site** - Home, Menu (donuts + beverages, each item with its photo +
   description, plus live search), About, Contact. Live "open now" status, a lazy
   YouTube embed, a Google map, prominent Call / Directions CTAs, and
   `LocalBusiness` structured data.
-- **Admin console** (`/admin`) — log in to edit hours & holiday hours, the
+- **Admin console** (`/admin`) - log in to edit hours & holiday hours, the
   announcement banner, home/about text, contact & location, the full menu
   (sections, items, prices), gallery photos, video links, social links, and
   payment/amenity badges. Changes publish immediately.
-- **Resilient by design** — if a field is blank or the database is unreachable,
+- **Resilient by design** - if a field is blank or the database is unreachable,
   the public site falls back to built-in defaults and never visibly breaks. (It
   even renders fully from defaults before the database is configured.)
 
@@ -29,7 +29,7 @@ a simple built-in admin console so the owner can update everything without a dev
 | Styling    | Tailwind CSS v4 (warm brand theme) |
 | Data       | **Supabase Postgres** + Drizzle ORM |
 | Images     | Menu photos in `/public`; owner uploads → **Supabase Storage** |
-| Auth       | Single owner account — PBKDF2 (Web Crypto) + `jose` session cookie |
+| Auth       | Single owner account - PBKDF2 (Web Crypto) + `jose` session cookie |
 | Hosting    | **Vercel** |
 | Icons      | lucide-react + custom inline SVGs (payment/amenity/brand) |
 
@@ -64,9 +64,9 @@ Useful scripts: `npm run lint`, `npm run build`, `npm run db:studio`
 2. Create a **Supabase** project. In **Settings → Database**, copy the
    **Transaction pooler** connection string.
 3. In Vercel → **Project → Settings → Environment Variables**, add:
-   - `DATABASE_URL` — the Supabase pooler string
-   - `AUTH_SECRET` — a long random string
-   - `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` — *(optional)* for gallery uploads
+   - `DATABASE_URL` - the Supabase pooler string
+   - `AUTH_SECRET` - a long random string
+   - `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` - *(optional)* for gallery uploads
 4. Set the tables + content up once (from your machine, with `.env.local`
    pointing at the same Supabase project):
    ```bash

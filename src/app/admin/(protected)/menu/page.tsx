@@ -22,7 +22,7 @@ const TYPE_OPTIONS = [
 ];
 
 const inputCls =
-  "rounded-lg border border-cream-200 bg-white px-2 py-1.5 text-sm text-cocoa focus:border-berry focus:outline-none";
+  "rounded-lg border border-cream-200 bg-cream px-2 py-1.5 text-sm text-cocoa focus:border-berry focus:outline-none";
 
 type CatOption = { value: string; label: string };
 
@@ -36,7 +36,7 @@ function ItemRow({
   return (
     <form
       action={editItem}
-      className="flex flex-wrap items-center gap-2 rounded-lg border border-cream-200 bg-white p-2"
+      className="flex flex-wrap items-center gap-2 rounded-lg border border-cream-200 bg-cream p-2"
     >
       <input type="hidden" name="id" value={item.id} />
       <input type="hidden" name="sortOrder" value={item.sortOrder} />
@@ -242,7 +242,7 @@ export default async function MenuEditor() {
 
       {categories.length === 0 ? (
         <p className="text-cocoa-700">
-          No sections yet — add one above to get started.
+          No sections yet. Add one above to get started.
         </p>
       ) : (
         <div className="space-y-6">

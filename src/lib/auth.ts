@@ -9,7 +9,7 @@ import * as schema from "@/db/schema";
 export const SESSION_COOKIE = "dv_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
-// PBKDF2 params — MUST stay in sync with scripts/set-admin-password.mjs.
+// PBKDF2 params must stay in sync with scripts/set-admin-password.mjs.
 const PBKDF2_ITERATIONS = 100_000;
 const SALT_BYTES = 16;
 const KEY_BITS = 256;

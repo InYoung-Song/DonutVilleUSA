@@ -25,7 +25,7 @@ export async function uploadImage(
 ): Promise<ActionState> {
   if (!storageConfigured()) {
     return fail(
-      "Image uploads aren’t set up yet — add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",
+      "Image uploads aren’t set up yet. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",
     );
   }
   const file = form.get("file");
@@ -52,7 +52,7 @@ export async function uploadImage(
     revalidatePublic();
   } catch (err) {
     console.error("uploadImage failed:", err);
-    return fail("Upload failed — please try again.");
+    return fail("Upload failed. Please try again.");
   }
   return ok("Image uploaded.");
 }

@@ -40,5 +40,5 @@ export async function loginAction(
   }
 
   if (!ok) return { error: "Incorrect email or password." };
-  redirect("/admin"); // throws NEXT_REDIRECT — kept outside the try/catch
+  redirect("/admin"); // throws NEXT_REDIRECT, kept outside the try/catch
 }

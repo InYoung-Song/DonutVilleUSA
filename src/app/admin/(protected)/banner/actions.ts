@@ -31,7 +31,7 @@ export async function saveBanner(
     revalidatePublic();
   } catch (err) {
     console.error("saveBanner failed:", err);
-    return fail("Couldn’t save — please try again.");
+    return fail("Couldn’t save. Please try again.");
   }
   return ok("Banner saved.");
 }

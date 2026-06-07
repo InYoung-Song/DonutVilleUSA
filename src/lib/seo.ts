@@ -1,5 +1,5 @@
 import { parseTime } from "./hours";
-import { fullAddress } from "./format";
+import { formatPhoneDisplay, fullAddress } from "./format";
 import type { SiteSettings, DayHours } from "./content-types";
 
 export const SITE_URL = "https://donutvilleusa.com";
@@ -45,7 +45,7 @@ export function buildLocalBusinessJsonLd(
     name: settings.businessName,
     slogan: settings.tagline,
     url: SITE_URL,
-    telephone: settings.phone,
+    telephone: formatPhoneDisplay(settings.phone),
     address: {
       "@type": "PostalAddress",
       streetAddress: settings.addressLine1,
@@ -63,7 +63,7 @@ export function buildLocalBusinessJsonLd(
   }
   if (sameAs.length) data.sameAs = sameAs;
   if (settings.mapEmbedUrl) data.hasMap = settings.mapEmbedUrl;
-  data.description = `${settings.businessName} — ${fullAddress(settings)}`;
+  data.description = `${settings.businessName}: ${fullAddress(settings)}`;
 
   return data;
 }

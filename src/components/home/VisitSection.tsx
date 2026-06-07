@@ -53,7 +53,7 @@ export function VisitSection({
                     <span>
                       <span className="font-semibold">{s.label || s.date}:</span>{" "}
                       {specialLine(s)}
-                      {s.note ? ` — ${s.note}` : ""}
+                      {s.note ? `, ${s.note}` : ""}
                     </span>
                   </li>
                 ))}
@@ -80,7 +80,7 @@ export function VisitSection({
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-cream-200 shadow-sm">
+          <div className="motion-card overflow-hidden rounded-2xl border border-cream-200 shadow-sm">
             <MapEmbed
               src={settings.mapEmbedUrl}
               title={`Map to ${settings.businessName}`}

@@ -11,7 +11,7 @@ import {
   TiktokIcon,
 } from "./icons/brand";
 import { NAV_LINKS } from "@/lib/nav";
-import { telHref, directionsUrl } from "@/lib/format";
+import { telHref, directionsUrl, formatPhoneDisplay } from "@/lib/format";
 import { groupWeeklyHours } from "@/lib/hours";
 import type { SiteSettings, DayHours, SocialLinks } from "@/lib/content-types";
 
@@ -34,6 +34,7 @@ export function Footer({
   weekly: DayHours[];
 }) {
   const tel = telHref(settings.phone);
+  const phoneLabel = formatPhoneDisplay(settings.phone);
   const hoursLines = groupWeeklyHours(weekly);
   const year = new Date().getFullYear();
 
@@ -117,7 +118,7 @@ export function Footer({
           {tel && (
             <p className="text-sm">
               <a href={tel} className="inline-flex items-center gap-2 hover:text-berry">
-                <Phone className="h-4 w-4" aria-hidden="true" /> {settings.phone}
+                <Phone className="h-4 w-4" aria-hidden="true" /> {phoneLabel}
               </a>
             </p>
           )}

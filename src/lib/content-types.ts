@@ -1,5 +1,5 @@
 /**
- * UI-facing content shapes. These are what components consume — JSON columns
+ * UI-facing content shapes. These are what components consume: JSON columns
  * are already parsed and every field is guaranteed present (the query layer
  * fills gaps from defaults), so components never have to null-check core data.
  */

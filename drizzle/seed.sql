@@ -20,7 +20,7 @@ INSERT INTO settings (
   1,
   'Donutville U.S.A.',
   'Your Neighborhood Fix Since July 4th, 1966!',
-  '1-313-582-0350',
+  '+1 (313) 582-0350',
   '',
   '14829 Ford Rd.',
   'Dearborn',
@@ -29,9 +29,13 @@ INSERT INTO settings (
   'https://www.google.com/maps?q=14829+Ford+Rd,+Dearborn,+MI+48126&output=embed',
   'Hand-cut donuts & real-deal coffee',
   'A Dearborn tradition since July 4th, 1966.',
-  'Family owned & operated for over half a century. Our donuts are hand-cut the New England way, and our coffee is 100% Colombian Supremo — fresh every single day, 6 a.m. to 11 p.m.',
-  'Donutville U.S.A. opened on July 4th, 1966, and we’ve been your neighborhood fix ever since. Three generations later, we’re still hand-cutting our donuts the old-fashioned, New England way and brewing 100% Colombian Supremo coffee from open to close. Stop in, say hi, and grab a dozen — we’ll have the coffee on.',
-  'Voted Best Donut Shop 2014–2020 & Best Coffee 2016 — WDIV ‘4 the Best’',
+  'Family owned & operated for over half a century. Our donuts are hand-cut the New England way, and our coffee is 100% Colombian Supremo, fresh every single day, 6 a.m. to 11 p.m.',
+  'Donutville U.S.A. opened on July 4th, 1966, and we’ve been your neighborhood fix ever since.
+
+Three generations later, we’re still hand-cutting our donuts the old-fashioned, New England way and brewing 100% Colombian Supremo coffee from open to close. The routine is simple on purpose: fresh donuts every morning, coffee all day, and a counter that feels like Dearborn.
+
+Stop in, say hi, and grab a dozen. We’ll have the coffee on.',
+  'Voted Best Donut Shop 2014–2020 & Best Coffee 2016, WDIV ‘4 the Best’',
   'Call ahead for orders of 6 dozen or more. Large or special orders need 48 hours’ advance notice.',
   '',
   false,
@@ -68,7 +72,7 @@ INSERT INTO menu_categories (id, type, name, sort_order, visible) VALUES
 INSERT INTO menu_items (id, category_id, name, description, price, seasonal, sort_order, visible, image_key) VALUES
   (1,  1, 'Sugar Raised',         'Light, airy raised donuts rolled in sugar.',                          NULL, false, 1, true, '/menu/sugar-raised.webp'),
   (2,  1, 'Honey Dipped',         'Raised donuts in a sweet, glossy honey glaze.',                       NULL, false, 2, true, '/menu/honey-dipped.webp'),
-  (3,  1, 'Chocolate Iced Rings', 'Ring donuts dipped in chocolate — plain or with sprinkles.',          NULL, false, 3, true, '/menu/chocolate-iced-rings.webp'),
+  (3,  1, 'Chocolate Iced Rings', 'Ring donuts dipped in chocolate, plain or with sprinkles.',           NULL, false, 3, true, '/menu/chocolate-iced-rings.webp'),
   (4,  2, 'Chocolate',            'Rich, old-fashioned chocolate cake donuts.',                          NULL, false, 1, true, '/menu/chocolate.webp'),
   (5,  2, 'Red Velvet',           'Red velvet cake donuts with a tender crumb.',                         NULL, false, 2, true, '/menu/red-velvet.webp'),
   (6,  2, 'Buttermilk',           'Classic old-fashioned buttermilk cake donuts.',                       NULL, false, 3, true, '/menu/buttermilk.webp'),
@@ -83,11 +87,11 @@ INSERT INTO menu_items (id, category_id, name, description, price, seasonal, sor
   (15, 4, 'Éclairs',              'Long donuts topped with rich chocolate.',                             NULL, false, 2, true, '/menu/eclairs.webp'),
   (16, 4, 'French Crullers',      'Light, airy crullers with a delicate ridged twist.',                  NULL, false, 3, true, '/menu/french-crullers.webp'),
   (17, 4, 'Cinnamon Rolls',       'Big, gooey, fresh-baked cinnamon rolls.',                             NULL, false, 4, true, '/menu/cinnamon-rolls.webp'),
-  (18, 4, 'Donut Sticks',         'Hand-cut donut sticks — plain, sugared, or jelly-filled.',            NULL, false, 5, true, '/menu/sticks.webp'),
+  (18, 4, 'Donut Sticks',         'Hand-cut donut sticks: plain, sugared, or jelly-filled.',             NULL, false, 5, true, '/menu/sticks.webp'),
   (19, 5, 'Peanut',               'Glazed donuts rolled in crunchy chopped peanuts.',                    NULL, false, 1, true, '/menu/peanut.webp'),
   (20, 5, 'Dutch Crumb',          'Cake donuts in a cinnamon-sugar crumb coating.',                      NULL, false, 2, true, '/menu/dutch-crumb.webp'),
   (21, 5, 'Coconut',              'Cake donuts coated in sweet coconut.',                                NULL, false, 3, true, '/menu/coconut.webp'),
-  (22, 6, 'Muffins',              'Blueberry, chocolate chip, and more — baked fresh daily.',            NULL, false, 1, true, '/menu/muffins.webp'),
+  (22, 6, 'Muffins',              'Blueberry, chocolate chip, and more, baked fresh daily.',             NULL, false, 1, true, '/menu/muffins.webp'),
   (23, 6, 'Cookies',              'Fresh-baked cookies, including chocolate chip.',                      NULL, false, 2, true, '/menu/cookies.webp'),
   (24, 7, 'Colombian Supremo Coffee', 'Our signature 100% Colombian Supremo, fresh all day.',           NULL, false, 1, true, '/menu/coffee.webp'),
   (25, 7, 'Cappuccino',           'Espresso topped with steamed, frothy milk.',                          NULL, false, 2, true, '/menu/cappuccino.webp'),

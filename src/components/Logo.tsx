@@ -20,7 +20,7 @@ export function DonutMark({ className = "" }: { className?: string }) {
   );
 }
 
-/** Brand wordmark — fixed identity, not data-driven. */
+/** Brand wordmark: fixed identity, not data-driven. */
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>

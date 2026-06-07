@@ -33,7 +33,7 @@ export default async function HoursEditor() {
               return (
                 <div
                   key={d}
-                  className="grid grid-cols-[7rem_auto_1fr_1fr] items-center gap-3 rounded-lg border border-cream-200 bg-white px-3 py-2"
+                  className="grid grid-cols-[7rem_auto_1fr_1fr] items-center gap-3 rounded-lg border border-cream-200 bg-cream px-3 py-2"
                 >
                   <span className="font-semibold text-cocoa">{name}</span>
                   <label className="flex items-center gap-2 text-sm text-cocoa-700">
@@ -50,14 +50,14 @@ export default async function HoursEditor() {
                     name={`open_${d}`}
                     defaultValue={day.openTime}
                     aria-label={`${name} open time`}
-                    className="rounded-lg border border-cream-200 bg-white px-2 py-1.5 text-cocoa focus:border-berry focus:outline-none"
+                    className="rounded-lg border border-cream-200 bg-cream px-2 py-1.5 text-cocoa focus:border-berry focus:outline-none"
                   />
                   <input
                     type="time"
                     name={`close_${d}`}
                     defaultValue={day.closeTime}
                     aria-label={`${name} close time`}
-                    className="rounded-lg border border-cream-200 bg-white px-2 py-1.5 text-cocoa focus:border-berry focus:outline-none"
+                    className="rounded-lg border border-cream-200 bg-cream px-2 py-1.5 text-cocoa focus:border-berry focus:outline-none"
                   />
                 </div>
               );
@@ -79,11 +79,11 @@ export default async function HoursEditor() {
             {special.map((s) => (
               <li
                 key={s.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-cream-200 bg-white px-3 py-2 text-sm"
+                className="flex items-center justify-between gap-3 rounded-lg border border-cream-200 bg-cream px-3 py-2 text-sm"
               >
                 <span className="text-cocoa-700">
                   <span className="font-semibold text-cocoa">{s.date}</span>
-                  {s.label ? ` · ${s.label}` : ""} —{" "}
+                  {s.label ? ` · ${s.label}` : ""}:{" "}
                   {s.isClosed
                     ? "Closed"
                     : `${formatTime(s.openTime)} – ${formatTime(s.closeTime)}`}

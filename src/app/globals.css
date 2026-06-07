@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
   Donutville U.S.A. brand theme
-  Warm, friendly, neighborhood donut shop — cream + coffee + strawberry icing,
-  with a subtle patriotic nod ("Since July 4th, 1966"). Light theme only by
-  design: a bright bakery should always feel bright.
+  Warm, friendly, neighborhood donut shop: cream + coffee + strawberry icing,
+  with a subtle patriotic nod ("Since July 4th, 1966").
 */
 @theme {
   /* Surfaces */
@@ -12,21 +13,21 @@
   --color-cream-100: #fdeede;
   --color-cream-200: #f7ddc4;
 
-  /* Coffee / cocoa — primary text + dark surfaces */
+  /* Coffee / cocoa: primary text + dark surfaces */
   --color-cocoa: #3b2417;
   --color-cocoa-700: #5a3a28;
-  --color-cocoa-500: #8a5a3c;
+  --color-cocoa-500: #68422d;
 
-  /* Strawberry icing — primary accent / CTAs */
-  --color-berry: #e23a5e;
-  --color-berry-600: #c12848;
+  /* Strawberry icing: primary accent / CTAs */
+  --color-berry: #a8163a;
+  --color-berry-600: #7d102c;
   --color-berry-100: #fde2e8;
 
-  /* Golden caramel — secondary accent */
+  /* Golden caramel: secondary accent */
   --color-caramel: #e8a33d;
   --color-caramel-100: #fbe6c9;
 
-  /* Subtle patriotic blue — small accents only */
+  /* Subtle patriotic blue: small accents only */
   --color-navy: #1e3a5f;
   --color-sprinkle: #4aa3df;
 
@@ -36,6 +37,34 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    /* Surfaces */
+    --color-cream: #11100f;
+    --color-cream-100: #1b1714;
+    --color-cream-200: #453a31;
+
+    /* Cocoa becomes high-contrast warm text in dark mode. */
+    --color-cocoa: #fff1df;
+    --color-cocoa-700: #ead3bd;
+    --color-cocoa-500: #d6b89d;
+
+    /* Lighter accents keep links/buttons visible on dark surfaces. */
+    --color-berry: #ff8eaa;
+    --color-berry-600: #ffb5c8;
+    --color-berry-100: #3f1720;
+
+    --color-caramel: #ffc76b;
+    --color-caramel-100: #412913;
+    --color-navy: #9dc8ff;
+    --color-sprinkle: #88d4ff;
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -51,6 +80,9 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
   }
 
   h1,
@@ -67,5 +99,64 @@
     outline: 2px solid var(--color-berry);
     outline-offset: 2px;
     border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  @keyframes page-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes soft-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    main {
+      animation: page-rise 360ms ease-out both;
+    }
+
+    main > section,
+    main > .page-motion {
+      animation: page-rise 520ms ease-out both;
+    }
+
+    .motion-card {
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .motion-card:hover {
+      border-color: color-mix(in srgb, var(--color-berry) 70%, transparent);
+      box-shadow: 0 16px 40px color-mix(in srgb, var(--color-cocoa) 14%, transparent);
+      transform: translateY(-4px);
+    }
+
+    .motion-float {
+      animation: soft-float 5s ease-in-out infinite;
+    }
+
+    .motion-delay-1 {
+      animation-delay: 160ms;
+    }
+
+    .motion-delay-2 {
+      animation-delay: 320ms;
+    }
   }
 }

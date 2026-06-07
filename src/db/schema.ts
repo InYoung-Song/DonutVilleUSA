@@ -33,7 +33,7 @@ export const settings = pgTable("settings", {
   updatedAt: text("updated_at").notNull().default(""),
 });
 
-/** Regular weekly hours — one row per day (0 = Sunday … 6 = Saturday). */
+/** Regular weekly hours: one row per day (0 = Sunday … 6 = Saturday). */
 export const hours = pgTable("hours", {
   id: serial("id").primaryKey(),
   dayOfWeek: integer("day_of_week").notNull(),
@@ -97,6 +97,17 @@ export const featuredSections = pgTable("featured_sections", {
   visible: boolean("visible").notNull().default(true),
 });
 
+/** Public contact form submissions, reviewable from the admin dashboard. */
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().default(""),
+  email: text("email").notNull().default(""),
+  phone: text("phone").notNull().default(""),
+  subject: text("subject").notNull().default(""),
+  message: text("message").notNull().default(""),
+  createdAt: text("created_at").notNull().default(""),
+});
+
 /** Admin accounts (single owner expected). Password hashed with PBKDF2. */
 export const adminUsers = pgTable("admin_users", {
   id: serial("id").primaryKey(),
@@ -114,3 +125,4 @@ export type MenuItemRow = typeof menuItems.$inferSelect;
 export type GalleryImageRow = typeof galleryImages.$inferSelect;
 export type FeaturedSectionRow = typeof featuredSections.$inferSelect;
 export type AdminUserRow = typeof adminUsers.$inferSelect;
+export type ContactSubmissionRow = typeof contactSubmissions.$inferSelect;

@@ -26,7 +26,7 @@ export async function saveContact(
     revalidatePublic();
   } catch (err) {
     console.error("saveContact failed:", err);
-    return fail("Couldn’t save — please try again.");
+    return fail("Couldn’t save. Please try again.");
   }
   return ok("Contact & location saved.");
 }

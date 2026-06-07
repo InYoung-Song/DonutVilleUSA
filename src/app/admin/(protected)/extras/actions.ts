@@ -51,7 +51,7 @@ export async function saveExtras(
     revalidatePublic();
   } catch (err) {
     console.error("saveExtras failed:", err);
-    return fail("Couldn’t save — please try again.");
+    return fail("Couldn’t save. Please try again.");
   }
   return ok("Video, social & badges saved.");
 }

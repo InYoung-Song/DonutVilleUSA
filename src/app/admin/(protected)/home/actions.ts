@@ -20,7 +20,7 @@ export async function saveHome(
     revalidatePublic();
   } catch (err) {
     console.error("saveHome failed:", err);
-    return fail("Couldn’t save — please try again.");
+    return fail("Couldn’t save. Please try again.");
   }
   return ok("Home & About saved.");
 }

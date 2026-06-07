@@ -5,7 +5,7 @@ type AddressParts = Pick<
   "addressLine1" | "city" | "state" | "zip"
 >;
 
-/** "14829 Ford Rd., Dearborn, MI 48126" — skips blank parts. */
+/** "14829 Ford Rd., Dearborn, MI 48126"; skips blank parts. */
 export function fullAddress(s: AddressParts): string {
   const cityState = [s.city, s.state].filter(Boolean).join(", ");
   const line2 = [cityState, s.zip].filter(Boolean).join(" ").trim();
@@ -14,8 +14,23 @@ export function fullAddress(s: AddressParts): string {
 
 /** Sanitized tel: href, or "" if there is no usable number. */
 export function telHref(phone: string): string {
-  const digits = (phone || "").replace(/[^\d+]/g, "");
-  return digits ? `tel:${digits}` : "";
+  const digits = (phone || "").replace(/\D/g, "");
+  if (!digits) return "";
+  if (digits.length === 10) return `tel:+1${digits}`;
+  if (digits.length === 11 && digits.startsWith("1")) return `tel:+${digits}`;
+  return `tel:${phone.trim().startsWith("+") ? "+" : ""}${digits}`;
+}
+
+/** Display North American numbers as "+1 (313) 582-0350"; leave odd inputs alone. */
+export function formatPhoneDisplay(phone: string): string {
+  const trimmed = (phone || "").trim();
+  const digits = trimmed.replace(/\D/g, "");
+  const local =
+    digits.length === 11 && digits.startsWith("1") ? digits.slice(1) : digits;
+
+  if (local.length !== 10) return trimmed;
+
+  return `+1 (${local.slice(0, 3)}) ${local.slice(3, 6)}-${local.slice(6)}`;
 }
 
 /** Google Maps directions link to the shop. */

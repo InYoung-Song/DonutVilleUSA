@@ -1,7 +1,7 @@
 // Presentational, server-usable form fields (uncontrolled, defaultValue-based).
 
 const inputCls =
-  "mt-1 w-full rounded-lg border border-cream-200 bg-white px-3 py-2 text-cocoa placeholder:text-cocoa-500 focus:border-berry focus:outline-none";
+  "mt-1 w-full rounded-lg border border-cream-200 bg-cream px-3 py-2 text-cocoa placeholder:text-cocoa-500 focus:border-berry focus:outline-none";
 const labelCls = "block text-sm font-semibold text-cocoa";
 const hintCls = "mt-1 text-xs text-cocoa-500";
 

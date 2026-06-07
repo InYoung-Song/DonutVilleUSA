@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X, Phone } from "lucide-react";
 import { Logo } from "./Logo";
 import { OpenNowBadge } from "./OpenNowBadge";
+import { ThemeToggle } from "./ThemeToggle";
 import { NAV_LINKS } from "@/lib/nav";
 import { telHref } from "@/lib/format";
 import type { DayHours, SpecialHour } from "@/lib/content-types";
@@ -59,7 +60,12 @@ export function Header({
 
         <div className="hidden items-center gap-4 md:flex">
           <OpenNowBadge weekly={weekly} special={special} />
+          <ThemeToggle />
           {callBtn()}
+        </div>
+
+        <div className="ml-auto md:hidden">
+          <ThemeToggle />
         </div>
 
         <button

@@ -38,7 +38,7 @@ export default async function ContactEditor() {
           label="Google Maps embed URL"
           name="mapEmbedUrl"
           defaultValue={s.mapEmbedUrl}
-          hint="Tip: use a https://www.google.com/maps?q=...&output=embed link."
+          hint="Tip: use a Google Maps embed URL, or paste the iframe src from Atlist, Felt, or a published Mapbox map."
         />
         <TextAreaField
           label="Large-order policy"

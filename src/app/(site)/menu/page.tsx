@@ -23,11 +23,11 @@ export default async function MenuPage() {
           <h1 className="text-4xl font-bold text-cocoa">Our Menu</h1>
           <p className="mt-3 max-w-2xl text-lg text-cocoa-700">
             Hand-cut every morning the New England way, with fresh coffee on all
-            day. Selection rotates — call ahead if you’re after something
+            day. Selection rotates, so call ahead if you’re after something
             specific.
           </p>
           {settings.largeOrderPolicy && (
-            <p className="mt-5 max-w-2xl rounded-xl bg-white/70 p-4 text-sm text-cocoa-700">
+            <p className="mt-5 max-w-2xl rounded-xl bg-cream/70 p-4 text-sm text-cocoa-700">
               {settings.largeOrderPolicy}
             </p>
           )}

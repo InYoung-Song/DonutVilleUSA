@@ -12,14 +12,14 @@ import type {
  *
  * This serves two jobs:
  *  1. It seeds the database (see drizzle/seed.sql, kept in sync with this).
- *  2. It is the runtime fallback — if the DB is empty/unreachable or a field
+ *  2. It is the runtime fallback: if the DB is empty/unreachable or a field
  *     is blank, the public site still shows correct, on-brand information.
  */
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   businessName: "Donutville U.S.A.",
   tagline: "Your Neighborhood Fix Since July 4th, 1966!",
-  phone: "1-313-582-0350",
+  phone: "+1 (313) 582-0350",
   email: "",
   addressLine1: "14829 Ford Rd.",
   city: "Dearborn",
@@ -30,11 +30,11 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   heroTitle: "Hand-cut donuts & real-deal coffee",
   heroSubtitle: "A Dearborn tradition since July 4th, 1966.",
   homeIntro:
-    "Family owned & operated for over half a century. Our donuts are hand-cut the New England way, and our coffee is 100% Colombian Supremo — fresh every single day, 6 a.m. to 11 p.m.",
+    "Family owned & operated for over half a century. Our donuts are hand-cut the New England way, and our coffee is 100% Colombian Supremo, fresh every single day, 6 a.m. to 11 p.m.",
   aboutBody:
-    "Donutville U.S.A. opened on July 4th, 1966, and we've been your neighborhood fix ever since. Three generations later, we're still hand-cutting our donuts the old-fashioned, New England way and brewing 100% Colombian Supremo coffee from open to close. Stop in, say hi, and grab a dozen — we'll have the coffee on.",
+    "Donutville U.S.A. opened on July 4th, 1966, and we've been your neighborhood fix ever since.\n\nThree generations later, we're still hand-cutting our donuts the old-fashioned, New England way and brewing 100% Colombian Supremo coffee from open to close. The routine is simple on purpose: fresh donuts every morning, coffee all day, and a counter that feels like Dearborn.\n\nStop in, say hi, and grab a dozen. We'll have the coffee on.",
   awardsText:
-    "Voted Best Donut Shop 2014–2020 & Best Coffee 2016 — WDIV ‘4 the Best’",
+    "Voted Best Donut Shop 2014–2020 & Best Coffee 2016, WDIV ‘4 the Best’",
   largeOrderPolicy:
     "Call ahead for orders of 6 dozen or more. Large or special orders need 48 hours’ advance notice.",
   bannerText: "",
@@ -62,7 +62,7 @@ export const DEFAULT_HOURS: DayHours[] = Array.from({ length: 7 }, (_, day) => (
 export const DEFAULT_SPECIAL_HOURS: SpecialHour[] = [];
 
 /**
- * The original Donutville menu — each item carries its real photo (migrated
+ * The original Donutville menu: each item carries its real photo (migrated
  * from the old site) and a short description. Prices are optional and blank by
  * default (the original listed none); the owner can add them in the admin.
  */
@@ -82,7 +82,7 @@ export const DEFAULT_MENU: MenuCategory[] = [
       }),
       m(3, "Chocolate Iced Rings", {
         image: "chocolate-iced-rings",
-        description: "Ring donuts dipped in chocolate — plain or with sprinkles.",
+        description: "Ring donuts dipped in chocolate, plain or with sprinkles.",
       }),
     ],
   },
@@ -164,7 +164,7 @@ export const DEFAULT_MENU: MenuCategory[] = [
       }),
       m(18, "Donut Sticks", {
         image: "sticks",
-        description: "Hand-cut donut sticks — plain, sugared, or jelly-filled.",
+        description: "Hand-cut donut sticks: plain, sugared, or jelly-filled.",
       }),
     ],
   },
@@ -194,7 +194,7 @@ export const DEFAULT_MENU: MenuCategory[] = [
     items: [
       m(22, "Muffins", {
         image: "muffins",
-        description: "Blueberry, chocolate chip, and more — baked fresh daily.",
+        description: "Blueberry, chocolate chip, and more, baked fresh daily.",
       }),
       m(23, "Cookies", {
         image: "cookies",

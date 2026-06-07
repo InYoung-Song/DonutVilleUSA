@@ -11,6 +11,33 @@ const LABELS: Record<MenuType, string> = {
   beverage: "Beverages",
 };
 
+const SEARCH_ALIASES: Record<string, string[]> = {
+  classic: ["raised", "glazed", "honey", "sugar", "cake"],
+  coffee: ["colombian", "supremo", "cappuccino"],
+  cream: ["bavarian", "custard", "filled", "eclair"],
+  drink: ["beverage", "coffee", "juice", "milk", "water", "tea"],
+  filled: ["jelly", "bavarian", "custard", "cream"],
+  fruit: ["apple", "blueberry", "cherry", "cranberry", "lemon", "orange", "pineapple", "raspberry", "strawberry"],
+  old: ["buttermilk", "sour cream", "cake"],
+  pastry: ["bow", "cinnamon", "cruller", "eclair", "roll", "stick"],
+};
+
+function expandedSearchTerms(query: string): string[] {
+  const words = query.split(/\s+/).filter(Boolean);
+  const terms = new Set([query, ...words]);
+
+  for (const word of words) {
+    for (const [key, aliases] of Object.entries(SEARCH_ALIASES)) {
+      if (key.includes(word) || word.includes(key)) {
+        terms.add(key);
+        aliases.forEach((alias) => terms.add(alias));
+      }
+    }
+  }
+
+  return [...terms];
+}
+
 export function MenuBrowser({ menu }: { menu: MenuCategory[] }) {
   const types = useMemo<MenuType[]>(() => {
     const t: MenuType[] = [];
@@ -22,6 +49,7 @@ export function MenuBrowser({ menu }: { menu: MenuCategory[] }) {
   const [activeType, setActiveType] = useState<MenuType>(types[0] ?? "donut");
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
+  const searchTerms = useMemo(() => expandedSearchTerms(q), [q]);
 
   const visibleCats = useMemo(() => {
     return menu
@@ -30,21 +58,25 @@ export function MenuBrowser({ menu }: { menu: MenuCategory[] }) {
         ...c,
         items: q
           ? c.items.filter(
-              (i) =>
-                i.name.toLowerCase().includes(q) ||
-                (i.description?.toLowerCase().includes(q) ?? false),
+              (i) => {
+                const haystack = [c.name, i.name, i.description]
+                  .filter(Boolean)
+                  .join(" ")
+                  .toLowerCase();
+                return searchTerms.some((term) => haystack.includes(term));
+              },
             )
           : c.items,
       }))
       .filter((c) => c.items.length > 0);
-  }, [menu, activeType, q]);
+  }, [menu, activeType, q, searchTerms]);
 
   const totalMatches = visibleCats.reduce((n, c) => n + c.items.length, 0);
 
   if (menu.length === 0) {
     return (
       <p className="rounded-xl bg-cream-100 p-6 text-center text-cocoa-700">
-        Our menu is coming together — please call us for today’s selection!
+        Our menu is coming together. Please call us for today’s selection!
       </p>
     );
   }
@@ -103,7 +135,7 @@ export function MenuBrowser({ menu }: { menu: MenuCategory[] }) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search ${LABELS[activeType].toLowerCase()}…`}
             aria-label={`Search ${LABELS[activeType].toLowerCase()}`}
-            className="w-full rounded-full border border-cream-200 bg-white/70 py-2 pl-9 pr-9 text-cocoa placeholder:text-cocoa-500 focus:border-berry focus:outline-none"
+            className="w-full rounded-full border border-cream-200 bg-cream/70 py-2 pl-9 pr-9 text-cocoa placeholder:text-cocoa-500 focus:border-berry focus:outline-none"
           />
           {query && (
             <button

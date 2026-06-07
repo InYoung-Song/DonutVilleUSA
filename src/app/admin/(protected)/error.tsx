@@ -18,7 +18,7 @@ export default function AdminError({
     <div className="rounded-2xl border border-berry/20 bg-berry-100 p-6">
       <h1 className="text-xl font-bold text-cocoa">Something went wrong</h1>
       <p className="mt-2 text-cocoa-700">
-        That action didn’t go through. Your changes weren’t lost — please try
+        That action didn’t go through. Your changes weren’t lost. Please try
         again.
       </p>
       <div className="mt-4 flex gap-3">

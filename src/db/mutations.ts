@@ -142,3 +142,21 @@ export async function updateItem(id: number, v: ItemInput): Promise<void> {
 export async function deleteItem(id: number): Promise<void> {
   await getDb().delete(schema.menuItems).where(eq(schema.menuItems.id, id));
 }
+
+// -- Contact submissions ------------------------------------------------------
+export interface ContactSubmissionInput {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+export async function addContactSubmission(
+  values: ContactSubmissionInput,
+): Promise<void> {
+  await getDb().insert(schema.contactSubmissions).values({
+    ...values,
+    createdAt: new Date().toISOString(),
+  });
+}

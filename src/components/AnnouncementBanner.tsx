@@ -54,7 +54,7 @@ export function AnnouncementBanner({
               /* ignore */
             }
           }}
-          className="-mr-1 rounded-full p-1 text-cream/90 transition-colors hover:bg-white/20 hover:text-cream"
+          className="-mr-1 rounded-full p-1 text-cream transition-colors hover:bg-white/20"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>

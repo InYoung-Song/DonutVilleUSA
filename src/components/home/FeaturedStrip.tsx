@@ -11,7 +11,7 @@ export function FeaturedStrip({ items }: { items: FeaturedSection[] }) {
           {items.map((f) => (
             <li
               key={f.id}
-              className="rounded-2xl border border-cream-200 bg-white/60 p-6"
+              className="motion-card rounded-2xl border border-cream-200 bg-cream/70 p-6"
             >
               <h3 className="font-display text-xl font-semibold text-cocoa">
                 {f.title}

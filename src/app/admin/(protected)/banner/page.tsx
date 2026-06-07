@@ -20,7 +20,7 @@ export default async function BannerEditor() {
           name="bannerText"
           defaultValue={s.bannerText}
           rows={2}
-          placeholder="e.g. Closed July 4th — Happy Birthday, America!"
+          placeholder="e.g. Closed July 4th. Happy Birthday, America!"
         />
         <CheckboxField
           label="Show the banner"

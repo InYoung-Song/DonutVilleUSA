@@ -44,7 +44,7 @@ export async function saveWeeklyHours(
     revalidatePublic();
   } catch (err) {
     console.error("saveWeeklyHours failed:", err);
-    return fail("Couldn’t save — please try again.");
+    return fail("Couldn’t save. Please try again.");
   }
   return ok("Weekly hours saved.");
 }
@@ -84,7 +84,7 @@ export async function createSpecialHour(
     revalidatePublic();
   } catch (err) {
     console.error("createSpecialHour failed:", err);
-    return fail("Couldn’t add — please try again.");
+    return fail("Couldn’t add. Please try again.");
   }
   return ok("Special day added.");
 }

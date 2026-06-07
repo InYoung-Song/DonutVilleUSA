@@ -16,7 +16,7 @@ export function GallerySection({ images }: { images: GalleryImage[] }) {
           {images.map((img) => (
             <li
               key={img.id}
-              className="overflow-hidden rounded-2xl border border-cream-200 bg-white"
+              className="motion-card overflow-hidden rounded-2xl border border-cream-200 bg-cream"
             >
               <div className="relative aspect-square">
                 <SmartImage

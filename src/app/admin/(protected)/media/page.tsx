@@ -12,13 +12,13 @@ import { uploadImage, editImage, removeImage } from "./actions";
 export const dynamic = "force-dynamic";
 
 const inputCls =
-  "w-full rounded-lg border border-cream-200 bg-white px-2 py-1.5 text-sm text-cocoa focus:border-berry focus:outline-none";
+  "w-full rounded-lg border border-cream-200 bg-cream px-2 py-1.5 text-sm text-cocoa focus:border-berry focus:outline-none";
 
 function ImageCard({ img }: { img: GalleryImageRow }) {
   return (
     <form
       action={editImage}
-      className="flex gap-4 rounded-xl border border-cream-200 bg-white p-3"
+      className="motion-card flex gap-4 rounded-xl border border-cream-200 bg-cream p-3"
     >
       <SmartImage
         src={mediaSrc(img.r2Key)}
@@ -117,7 +117,7 @@ export default async function MediaEditor() {
         </h2>
         {images.length === 0 ? (
           <p className="mt-2 text-cocoa-700">
-            No photos yet — upload your first one above.
+            No photos yet. Upload your first one above.
           </p>
         ) : (
           <div className="mt-4 grid gap-3 sm:grid-cols-2">

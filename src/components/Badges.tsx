@@ -13,10 +13,10 @@ function MastercardMark() {
 }
 
 const PAYMENT_TEXT: Partial<Record<BadgeKey, string>> = {
-  visa: "text-[#1A1F71] italic",
-  amex: "text-[#1F72CD]",
-  discover: "text-[#E76F00]",
-  cash: "text-green-700",
+  visa: "text-cocoa italic",
+  amex: "text-cocoa",
+  discover: "text-cocoa",
+  cash: "text-cocoa",
   applepay: "text-cocoa",
   googlepay: "text-cocoa",
 };
@@ -25,7 +25,7 @@ function PaymentChip({ k }: { k: BadgeKey }) {
   const meta = BADGE_META[k];
   return (
     <span
-      className="inline-flex h-7 items-center gap-1.5 rounded-md border border-cream-200 bg-white px-2.5 text-xs font-bold"
+      className="inline-flex h-7 items-center gap-1.5 rounded-md border border-cream-200 bg-cream px-2.5 text-xs font-bold"
       aria-label={meta.label}
       title={meta.label}
     >

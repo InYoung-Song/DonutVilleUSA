@@ -46,7 +46,7 @@ export function OpenNowBadge({
     >
       <span
         className={`h-2.5 w-2.5 rounded-full ${
-          status.open ? "bg-green-600" : "bg-berry"
+          status.open ? "bg-caramel" : "bg-berry"
         }`}
         aria-hidden="true"
       />

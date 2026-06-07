@@ -1,7 +1,7 @@
 import { Container } from "../ui/Container";
 import { ButtonLink } from "../ui/ButtonLink";
 import { OpenNowBadge } from "../OpenNowBadge";
-import { telHref } from "@/lib/format";
+import { formatPhoneDisplay, telHref } from "@/lib/format";
 import type { SiteSettings, DayHours, SpecialHour } from "@/lib/content-types";
 
 function HeroDonut({ fill, className }: { fill: string; className: string }) {
@@ -21,13 +21,13 @@ function HeroDonut({ fill, className }: { fill: string; className: string }) {
   );
 }
 
-/** Decorative trio of frosted donuts for the hero — pure CSS/SVG, no assets. */
+/** Decorative trio of frosted donuts for the hero, pure CSS/SVG with no assets. */
 function HeroArt() {
   return (
     <div className="relative mx-auto aspect-square w-full max-w-sm" aria-hidden="true">
-      <HeroDonut fill="#E23A5E" className="absolute left-2 top-0 w-40 rotate-[-8deg] drop-shadow-md sm:w-52" />
-      <HeroDonut fill="#8A5A3C" className="absolute right-0 top-16 w-36 rotate-[10deg] drop-shadow-md sm:w-48" />
-      <HeroDonut fill="#E8A33D" className="absolute bottom-0 left-10 w-32 rotate-[4deg] drop-shadow-md sm:w-40" />
+      <HeroDonut fill="#E23A5E" className="motion-float absolute left-2 top-0 w-40 rotate-[-8deg] drop-shadow-md sm:w-52" />
+      <HeroDonut fill="#8A5A3C" className="motion-float motion-delay-1 absolute right-0 top-16 w-36 rotate-[10deg] drop-shadow-md sm:w-48" />
+      <HeroDonut fill="#E8A33D" className="motion-float motion-delay-2 absolute bottom-0 left-10 w-32 rotate-[4deg] drop-shadow-md sm:w-40" />
     </div>
   );
 }
@@ -42,6 +42,7 @@ export function Hero({
   special: SpecialHour[];
 }) {
   const tel = telHref(settings.phone);
+  const phoneLabel = formatPhoneDisplay(settings.phone);
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-cream to-cream-100">
       <Container className="grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20">
@@ -65,7 +66,7 @@ export function Hero({
             <ButtonLink href="/menu">See the Menu</ButtonLink>
             {tel && (
               <ButtonLink href={tel} variant="ghost">
-                Call {settings.phone}
+                Call {phoneLabel}
               </ButtonLink>
             )}
           </div>

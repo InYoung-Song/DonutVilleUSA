@@ -8,6 +8,7 @@ const SECTIONS = [
   { href: "/admin/banner", title: "Announcement", desc: "Top-of-site banner" },
   { href: "/admin/home", title: "Home & About", desc: "Hero, intro, story" },
   { href: "/admin/contact", title: "Contact & Location", desc: "Address, phone, map" },
+  { href: "/admin/messages", title: "Messages", desc: "Contact form inbox" },
   { href: "/admin/menu", title: "Menu", desc: "Donuts, beverages, prices" },
   { href: "/admin/media", title: "Gallery", desc: "Photos & images" },
   { href: "/admin/extras", title: "Video, Social & Badges", desc: "Links & amenities" },
@@ -26,7 +27,7 @@ export default function AdminDashboard() {
           <li key={s.href}>
             <Link
               href={s.href}
-              className="block rounded-2xl border border-cream-200 bg-cream p-5 transition-colors hover:border-berry"
+              className="motion-card block rounded-2xl border border-cream-200 bg-cream p-5 transition-colors hover:border-berry"
             >
               <span className="font-display text-lg font-semibold text-cocoa">
                 {s.title}

@@ -9,7 +9,7 @@ type Action = (state: ActionState, form: FormData) => Promise<ActionState>;
 /**
  * Wraps a server action with useActionState and renders a save button + status.
  * Fields are passed as children (server-rendered, uncontrolled), so the form
- * keeps its values on a failed save — no data loss.
+ * keeps its values on a failed save, with no data loss.
  */
 export function AdminForm({
   action,
@@ -30,7 +30,7 @@ export function AdminForm({
           <span
             role="status"
             className={`text-sm font-semibold ${
-              state.ok ? "text-green-700" : "text-berry-600"
+              state.ok ? "text-cocoa-700" : "text-berry"
             }`}
           >
             {state.message}

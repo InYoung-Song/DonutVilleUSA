@@ -1,7 +1,7 @@
 import { DAY_NAMES_SHORT } from "./content-types";
 import type { DayHours, SpecialHour, SiteSettings } from "./content-types";
 
-/** The shop is in Dearborn, MI — compute "open now" in its timezone. */
+/** The shop is in Dearborn, MI; compute "open now" in its timezone. */
 export const SHOP_TIME_ZONE = "America/Detroit";
 
 export interface ShopNow {

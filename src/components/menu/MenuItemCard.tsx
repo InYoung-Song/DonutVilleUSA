@@ -7,7 +7,7 @@ import type { MenuItem } from "@/lib/content-types";
 export function MenuItemCard({ item }: { item: MenuItem }) {
   const price = formatPrice(item.price);
   return (
-    <li className="overflow-hidden rounded-xl border border-cream-200 bg-white/60">
+    <li className="motion-card overflow-hidden rounded-xl border border-cream-200 bg-cream/70">
       <div className="relative aspect-[4/3] bg-cream-100">
         {item.imageKey ? (
           <SmartImage

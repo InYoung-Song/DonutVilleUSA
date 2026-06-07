@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { asc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { getDb } from "./client";
 import * as schema from "./schema";
 import {
@@ -212,6 +212,22 @@ export const getFeatured = cache(async (): Promise<FeaturedSection[]> => {
     return [];
   }
 });
+
+/** Admin inbox: newest public contact submissions first. */
+export const getContactSubmissionsAdmin = cache(
+  async (): Promise<schema.ContactSubmissionRow[]> => {
+    try {
+      const db = getDb();
+      return await db
+        .select()
+        .from(schema.contactSubmissions)
+        .orderBy(desc(schema.contactSubmissions.createdAt));
+    } catch (err) {
+      console.error("getContactSubmissionsAdmin failed:", err);
+      return [];
+    }
+  },
+);
 
 function mapSettings(row: schema.SettingsRow | undefined): SiteSettings {
   if (!row) return DEFAULT_SETTINGS;
